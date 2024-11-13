@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Management Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+<!-- Dashboard Container -->
+<div class="dashboard">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo"> <img src="../assets/icons8-natural-food-50.png" style="width: 30px; height: 30px;">Green Shadow </div>
+        <div class="hamburger" onclick="toggleSidebar()">&#9776;</div> <!-- Hamburger Icon -->
+        <div class="auth-buttons">
+            <button id="login-btn" class="btn btn-secondary">Login</button>
+            <button id="logout-btn" class="btn btn-secondary">Logout</button>
+        </div>
+    </header>
+
+    <!-- Dropdown Menu for Small Screens -->
+    <div class="dropdown-menu" id="dropdownMenu" style="background-color: #34495e">
+        <ul>
+            <li><a href="#" onclick="navigateTo('crop')">Crop Management</a></li>
+            <li><a href="#" onclick="navigateTo('equipment')">Equipment Management</a></li>
+            <li><a href="#" onclick="navigateTo('fields')">Field Management</a></li>
+            <li><a href="#" onclick="navigateTo('monitoring')">Monitoring Log Management</a></li>
+            <li><a href="#" onclick="navigateTo('staff')">Staff Management</a></li>
+            <li><a href="#" onclick="navigateTo('vehicles')">Vehicle Management</a></li>
+        </ul>
+    </div>
+
+    <!-- Sidebar Navigation for Larger Screens -->
+    <aside class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="#" onclick="navigateTo('crop')">Crop Management</a></li>
+            <li><a href="#" onclick="navigateTo('equipment')">Equipment Management</a></li>
+            <li><a href="#" onclick="navigateTo('fields')">Field Management</a></li>
+            <li><a href="#" onclick="navigateTo('monitoring')">Monitoring Log Management</a></li>
+            <li><a href="#" onclick="navigateTo('staff')">Staff Management</a></li>
+            <li><a href="#" onclick="navigateTo('vehicles')">Vehicle Management</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="crop-management content-section" id="crop">
+            <div class="container">
+                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Crop Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openCropsModal()">See All Crops</button></h2>
+                <!-- Popup Modal -->
+                <div id="cropsModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h3>All Crops</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover crop-table modal-table">
+                                <thead>
+                                <tr>
+                                    <th>Crop Code</th>
+                                    <th>Crop Common Name</th>
+                                    <th>Crop Scientific Name</th>
+                                    <th>Crop Image</th>
+                                    <th>Category</th>
+                                    <th>Crop Season</th>
+                                    <th>Field Code</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Populate crop data dynamically here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Select Crop Section -->
+                <div class="form-section">
+                    <label for="crop-code">Select Crop - Enter Crop Code</label>
+                    <input type="text" class="form-control" id="crop-code" placeholder="Enter Crop Code">
+                    <!-- Update Existing Crop Section -->
+                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Crop</h3>
+                    <div class="form-section">
+                        <label for="update-crop-common-name">Crop Common Name</label>
+                        <input type="text" class="form-control" id="update-crop-common-name" placeholder="Enter Common Name">
+
+                        <label for="update-crop-scientific-name">Crop Scientific Name</label>
+                        <input type="text" class="form-control" id="update-crop-scientific-name" placeholder="Enter Scientific Name">
+
+                        <label for="update-crop-image">Crop Image</label>
+                        <input type="file" class="form-control" id="update-crop-image">
+
+                        <label for="update-category">Category</label>
+                        <input type="text" class="form-control" id="update-category" placeholder="Enter Category">
+
+                        <label for="update-crop-season">Crop Season</label>
+                        <input type="text" class="form-control" id="update-crop-season" placeholder="Enter Crop Season">
+
+                        <label for="update-field-code">Field Code</label>
+                        <input type="text" class="form-control" id="update-field-code" placeholder="Enter Field Code">
+
+                        <button class="btn btn-primary update-btn">Update</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover crop-table modal-table">
+                            <thead>
+                            <tr>
+                                <th>Crop Common Name</th>
+                                <th>Crop Scientific Name</th>
+                                <th>Crop Image</th>
+                                <th>Category</th>
+                                <th>Crop Season</th>
+                                <th>Field Code</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Dynamic crop data rows will go here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-danger delete-btn">Delete</button>
+                </div>
+
+                <!-- Add New Crop Section -->
+                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Crop</h3>
+                <div class="form-section">
+                    <label for="crop-common-name">Crop Common Name</label>
+                    <input type="text" class="form-control" id="crop-common-name" placeholder="Enter Common Name">
+
+                    <label for="crop-scientific-name">Crop Scientific Name</label>
+                    <input type="text" class="form-control" id="crop-scientific-name" placeholder="Enter Scientific Name">
+
+                    <label for="crop-image">Crop Image</label>
+                    <input type="file" class="form-control" id="crop-image">
+
+                    <label for="category">Category</label>
+                    <input type="text" class="form-control" id="category" placeholder="Enter Category">
+
+                    <label for="crop-season">Crop Season</label>
+                    <input type="text" class="form-control" id="crop-season" placeholder="Enter Crop Season">
+
+                    <label for="field-code">Field Code</label>
+                    <input type="text" class="form-control" id="field-code" placeholder="Enter Field Code">
+                    <p>You can see all fields here: <button class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInCrop()">
+                        See all fields here
+                    </button><br></p>
+                    <!-- Popup Modal -->
+                    <div id="fieldsModalInCrop" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Fields</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover field-table modal-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Field Code</th>
+                                        <th>Field Name</th>
+                                        <th>Field Location</th>
+                                        <th>Extent Size</th>
+                                        <th>Field Image1</th>
+                                        <th>Field Image2</th>
+                                        <th>Staff</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Populate crop data dynamically here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary save-btn">Save</button>
+                </div>
+            </div>
+        </section>
+        <section class="equipment-management content-section" id="equipment">
+            <div class="container">
+                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Equipment Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openEquipmentModal()">See All Equipments</button></h2>
+                <!-- Popup Modal -->
+                <div id="equipmentsModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h3>All Equipments</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover equipment-table modal-table" >
+                                <thead>
+                                <tr>
+                                    <th>Equipment Id</th>
+                                    <th>Equipment Name</th>
+                                    <th>Equipment Type</th>
+                                    <th>Equipment Status</th>
+                                    <th>Staff Id</th>
+                                    <th>Field Code</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Populate equipment data dynamically here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Select Equipment Section -->
+                <div class="form-section">
+                    <label for="equipment-id">Select Equipment - Enter Equipment Id</label>
+                    <input type="text" class="form-control" id="equipment-id" placeholder="Enter Equipment Id">
+                    <!-- Update Existing Equipment Section -->
+                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Equipment</h3>
+                    <div class="form-section">
+                        <label for="update-equipment-name">Equipment Name</label>
+                        <input type="text" class="form-control" id="update-equipment-name" placeholder="Enter Equipment Name">
+                        <label for="update-equipment-type">Equipment Type</label>
+                        <select class="form-select form-select-sm" aria-label="Small select example" id="update-equipment-type">
+                            <option value="ELECTRICAL" selected>ELECTRICAL</option>
+                            <option value="MECHANICAL">MECHANICAL</option>
+                        </select>
+
+                        <label for="update-equipment-status">Equipment Status</label>
+                        <select class="form-select form-select-sm" aria-label="Small select example" id="update-equipment-status">
+                            <option value="AVAILABLE" selected>AVAILABLE</option>
+                            <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
+                        </select>
+
+                        <label for="update-staff-id-equipment">Staff Id</label>
+                        <input type="text" class="form-control" id="update-staff-id-equipment" placeholder="Enter Staff Id">
+
+                        <label for="update-field-code-equipment">Field Code</label>
+                        <input type="text" class="form-control" id="update-field-code-equipment" placeholder="Enter Field Code">
+
+                        <button class="btn btn-primary update-btn">Update</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover equipment-table modal-table">
+                            <thead>
+                            <tr>
+                                <th>Equipment Id</th>
+                                <th>Equipment Name</th>
+                                <th>Equipment Type</th>
+                                <th>Equipment Status</th>
+                                <th>Staff Id</th>
+                                <th>Field Code</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Dynamic equipment data rows will go here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-danger delete-btn">Delete</button>
+                </div>
+
+                <!-- Add New Equipment Section -->
+                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Equipment</h3>
+                <div class="form-section">
+                    <label for="equipment-name">Equipment Name</label>
+                    <input type="text" class="form-control" id="equipment-name" placeholder="Enter Equipment Name">
+
+                    <label for="equipment-type">Equipment Type</label>
+                    <select class="form-select form-select-sm" aria-label="Small select example" id="equipment-type">
+                        <option value="ELECTRICAL">ELECTRICAL</option>
+                        <option value="MECHANICAL">MECHANICAL</option>
+                    </select>
+
+                    <label for="equipment-status">Equipment Status</label>
+                    <select class="form-select form-select-sm" aria-label="Small select example" id="equipment-status">
+                        <option value="AVAILABLE">AVAILABLE</option>
+                        <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
+                    </select>
+
+                    <label for="staff-id-equipment">Staff Id</label>
+                    <input type="text" class="form-control" id="staff-id-equipment" placeholder="Enter Staff Id">
+                    <p>You can see all staff here: <button class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInEquipment()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
+                        See all Staff here
+                    </button><br></p>
+                    <!-- Popup Modal -->
+                    <div id="staffModalInEquipment" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Staff</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover staff-table modal-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Designation</th>
+                                        <th>Gender</th>
+                                        <th>Joined Date</th>
+                                        <th>DOB</th>
+                                        <th>Address Line1</th>
+                                        <th>Address Line2</th>
+                                        <th>Address Line3</th>
+                                        <th>Address Line4</th>
+                                        <th>Address Line5</th>
+                                        <th>Contact No</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Vehicles</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Populate staff data dynamically here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label for="field-code-equipment">Field Code</label>
+                    <input type="text" class="form-control" id="field-code-equipment" placeholder="Enter Field Code">
+                    <p>You can see all fields here: <button class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInEquipment()" >
+                        See all fields here
+                    </button><br></p>
+                    <!-- Popup Modal -->
+                    <div id="fieldsModalInEquipment" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Fields</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover field-table modal-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Field Code</th>
+                                        <th>Field Name</th>
+                                        <th>Field Location</th>
+                                        <th>Extent Size</th>
+                                        <th>Field Image1</th>
+                                        <th>Field Image2</th>
+                                        <th>Staff</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Populate crop data dynamically here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary save-btn">Save</button>
+                </div>
+            </div>
+        </section>
+        <section class="fields-management content-section" id="fields">
+            <div class="container">
+                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Fields Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModal()">See All Fields</button></h2>
+                <!-- Popup Modal -->
+                <div id="fieldsModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h3>All Fields</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover field-table modal-table">
+                                <thead>
+                                <tr>
+                                    <th>Field Code</th>
+                                    <th>Field Name</th>
+                                    <th>Field Location</th>
+                                    <th>Extent Size</th>
+                                    <th>Field Image1</th>
+                                    <th>Field Image2</th>
+                                    <th>Staff</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Populate crop data dynamically here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Select Field Section -->
+                <div class="form-section">
+                    <label for="fieldCode">Select Field - Enter Field Code</label>
+                    <input type="text" class="form-control" id="fieldCode" placeholder="Enter Field Code">
+                    <!-- Update Existing Field Section -->
+                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Field</h3>
+                    <div class="form-section">
+                        <label for="update-field-name">Field Name</label>
+                        <input type="text" class="form-control" id="update-field-name" placeholder="Enter Field Name">
+                        <label >Field Location</label>
+                        <ul>
+                            <li>
+                                <label for="update-longitude">Longitude(x)</label>
+                                <input type="number" step="any" class="form-control" id="update-longitude" placeholder="Enter longitude of the location ">
+                            </li>
+                            <li>
+                                <label for="update-latitude">latitude(y)</label>
+                                <input type="number" step="any" class="form-control" id="update-latitude" placeholder="Enter latitude of the location ">
+                            </li>
+                        </ul>
+                        <label for="update-extent-size">Extent Size</label>
+                        <input type="number" step="any" class="form-control" id="update-extent-size" placeholder="Enter Extent Size">
+                        <label for="update-field-image1">Field Image1</label>
+                        <input type="file" class="form-control" id="update-field-image1">
+                        <label for="update-field-image2">Field Image2</label>
+                        <input type="file" class="form-control" id="update-field-image2">
+                        <label for="update-staff-id-field">Staff Id</label>
+                        <input type="text" class="form-control" id="update-staff-id-field" placeholder="Enter Staff Id">
+                        <button class="btn btn-primary update-btn">Update</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover field-table modal-table">
+                            <thead>
+                            <tr>
+                                <th>Field Code</th>
+                                <th>Field Name</th>
+                                <th>Field Location</th>
+                                <th>Extent Size</th>
+                                <th>Field Image1</th>
+                                <th>Field Image2</th>
+                                <th>Staff</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Populate field data dynamically here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-danger delete-btn">Delete</button>
+                </div>
+
+                <!-- Add New Field Section -->
+                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Field</h3>
+                <div class="form-section">
+                    <label for="field-name">Field Name</label>
+                    <input type="text" class="form-control" id="field-name" placeholder="Enter Field Name">
+                    <label >Field Location</label>
+                    <ul>
+                        <li>
+                            <label for="longitude">Longitude(x)</label>
+                            <input type="number" step="any" class="form-control" id="longitude" placeholder="Enter longitude of the location ">
+                        </li>
+                        <li>
+                            <label for="latitude">latitude(y)</label>
+                            <input type="number" step="any" class="form-control" id="latitude" placeholder="Enter latitude of the location ">
+                        </li>
+                    </ul>
+                    <label for="extent-size">Extent Size</label>
+                    <input type="number" step="any" class="form-control" id="extent-size" placeholder="Enter Extent Size">
+                    <label for="field-image1">Field Image1</label>
+                    <input type="file" class="form-control" id="field-image1">
+                    <label for="field-image2">Field Image2</label>
+                    <input type="file" class="form-control" id="field-image2">
+                    <label for="staff-id-field">Staff Ids</label>
+                    <input type="text" class="form-control" id="staff-id-field" placeholder="Enter Staff Ids">
+                    <p>You can see all staff here: <button class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInField()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
+                        See all Staff here
+                    </button><br></p>
+                    <!-- Popup Modal -->
+                    <div id="staffModalInField" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Staff</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover staff-table modal-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Designation</th>
+                                        <th>Gender</th>
+                                        <th>Joined Date</th>
+                                        <th>DOB</th>
+                                        <th>Address Line1</th>
+                                        <th>Address Line2</th>
+                                        <th>Address Line3</th>
+                                        <th>Address Line4</th>
+                                        <th>Address Line5</th>
+                                        <th>Contact No</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Vehicles</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Populate staff data dynamically here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary save-btn">Save</button>
+                </div>
+            </div>
+        </section>
+        <section class="monitoring-log-management content-section" id="monitoring">
+            <div class="container">
+                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Monitoring Log Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openLogModal()">See All Logs</button></h2>
+                <!-- Popup Modal -->
+                <div id="logModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h3>All Monitoring Logs</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover log-table modal-table" >
+                                <thead>
+                                <tr>
+                                    <th>Log Code</th>
+                                    <th>Log Date</th>
+                                    <th>Observation</th>
+                                    <th>Observed Image</th>
+                                    <th>Fields</th>
+                                    <th>Crops</th>
+                                    <th>Staff</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Populate log data dynamically here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Select Log Section -->
+                <div class="form-section">
+                    <label for="log-code">Select Log - Enter Log Code</label>
+                    <input type="text" class="form-control" id="log-code" placeholder="Enter Log Code">
+                    <!-- Update Existing Log Section -->
+                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Log</h3>
+                    <div class="form-section">
+                        <label for="update-log-date">Log Date</label>
+                        <input type="date" class="form-control" id="update-log-date" placeholder="Enter Log Date">
+                        <label for="update-observation">Observation</label>
+                        <input type="text" class="form-control" id="update-observation" placeholder="Enter Observation">
+                        <label for="update-observed-image">Observed Image</label>
+                        <input type="file" class="form-control" id="update-observed-image">
+                        <label for="update-fields-log">Fields</label>
+                        <input type="text" class="form-control" id="update-fields-log" placeholder="Enter the Field Codes">
+                        <label for="update-crops-log">Crops</label>
+                        <input type="text" class="form-control" id="update-crops-log" placeholder="Enter the Crop Codes">
+                        <label for="update-staff-log">Staff</label>
+                        <input type="text" class="form-control" id="update-staff-log" placeholder="Enter the Staff Ids">
+                        <button class="btn btn-primary update-btn">Update</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover log-table modal-table">
+                            <thead>
+                            <tr>
+                                <th>Log Code</th>
+                                <th>Log Date</th>
+                                <th>Observation</th>
+                                <th>Observed Image</th>
+                                <th>Fields</th>
+                                <th>Crops</th>
+                                <th>Staff</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Populate log data dynamically here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-danger delete-btn">Delete</button>
+                </div>
+
+                <!-- Add New Equipment Section -->
+                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Equipment</h3>
+                <div class="form-section">
+                    <label for="log-date">Log Date</label>
+                    <input type="date" class="form-control" id="log-date" placeholder="Enter Log Date">
+                    <label for="observation">Observation</label>
+                    <input type="text" class="form-control" id="observation" placeholder="Enter Observation">
+                    <label for="observed-image">Observed Image</label>
+                    <input type="file" class="form-control" id="observed-image">
+                    <label for="fields-log">Field Codes</label>
+                    <input type="text" class="form-control" id="fields-log" placeholder="Enter the Field Codes">
+                    <p>You can see all fields here: <button class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInLog()" >
+                        See all fields here
+                    </button><br></p>
+                    <!-- Popup Modal -->
+                    <div id="fieldsModalInLog" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Fields</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover field-table modal-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Field Code</th>
+                                        <th>Field Name</th>
+                                        <th>Field Location</th>
+                                        <th>Extent Size</th>
+                                        <th>Field Image1</th>
+                                        <th>Field Image2</th>
+                                        <th>Staff</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Populate field data dynamically here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <label for="crops-log">Crops</label>
+                    <input type="text" class="form-control" id="crops-log" placeholder="Enter the Crop Codes">
+                    <p>You can see all crops here: <button class="btn btn-secondary see-all-crops-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openCropModalInLog()" >
+                        See all crops here
+                    </button><br></p>
+                    <!-- Popup Modal -->
+                    <div id="cropsModalInLog" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Crops</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover crop-table modal-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Crop Code</th>
+                                        <th>Crop Common Name</th>
+                                        <th>Crop Scientific Name</th>
+                                        <th>Crop Image</th>
+                                        <th>Category</th>
+                                        <th>Crop Season</th>
+                                        <th>Field Code</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Populate crop data dynamically here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <label for="staff-log">Staff</label>
+                    <input type="text" class="form-control" id="staff-log" placeholder="Enter the Staff Ids">
+                    <p>You can see all staff here: <button class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInLog()">
+                        See all Staff here
+                    </button><br></p>
+                    <!-- Popup Modal -->
+                    <div id="staffModalInLog" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Staff</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover staff-table modal-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Designation</th>
+                                        <th>Gender</th>
+                                        <th>Joined Date</th>
+                                        <th>DOB</th>
+                                        <th>Address Line1</th>
+                                        <th>Address Line2</th>
+                                        <th>Address Line3</th>
+                                        <th>Address Line4</th>
+                                        <th>Address Line5</th>
+                                        <th>Contact No</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Vehicles</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Populate staff data dynamically here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary save-btn">Save</button>
+                </div>
+            </div>
+        </section>
+        <section class="staff-management content-section" id="staff">
+            <div class="container">
+                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Staff Management <button class="see-all-btn" onclick="openCropsModal()">See All Crops</button></h2>
+                <!-- Popup Modal -->
+                <!--<div id="cropsModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h3>All Crops</h3>
+                        <table class="crop-table modal-table">
+                            <thead>
+                            <tr>
+                                <th>Crop Code</th>
+                                <th>Crop Common Name</th>
+                                <th>Crop Scientific Name</th>
+                                <th>Crop Image</th>
+                                <th>Category</th>
+                                <th>Crop Season</th>
+                                <th>Field Code</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            &lt;!&ndash; Populate crop data dynamically here &ndash;&gt;
+                            </tbody>
+                        </table>
+                    </div>
+                </div>-->
+                <!-- Select Crop Section -->
+                <!--<div class="form-section">
+                    <label for="crop-code">Select Crop - Enter Crop Code</label>
+                    <input type="text" id="crop-code" placeholder="Enter Crop Code">
+                    &lt;!&ndash; Update Existing Crop Section &ndash;&gt;
+                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Crop</h3>
+                    <div class="form-section">
+                        <label for="update-crop-common-name">Crop Common Name</label>
+                        <input type="text" id="update-crop-common-name" placeholder="Enter Common Name">
+
+                        <label for="update-crop-scientific-name">Crop Scientific Name</label>
+                        <input type="text" id="update-crop-scientific-name" placeholder="Enter Scientific Name">
+
+                        <label for="update-crop-image">Crop Image</label>
+                        <input type="file" id="update-crop-image">
+
+                        <label for="update-category">Category</label>
+                        <input type="text" id="update-category" placeholder="Enter Category">
+
+                        <label for="update-crop-season">Crop Season</label>
+                        <input type="text" id="update-crop-season" placeholder="Enter Crop Season">
+
+                        <label for="update-field-code">Field Code</label>
+                        <input type="text" id="update-field-code" placeholder="Enter Field Code">
+
+                        <button class="update-btn">Update</button>
+                    </div>
+                    <table class="crop-table modal-table">
+                        <thead>
+                        <tr>
+                            <th>Crop Common Name</th>
+                            <th>Crop Scientific Name</th>
+                            <th>Crop Image</th>
+                            <th>Category</th>
+                            <th>Crop Season</th>
+                            <th>Field Code</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        &lt;!&ndash; Dynamic crop data rows will go here &ndash;&gt;
+                        </tbody>
+                    </table>
+                    <button class="delete-btn">Delete</button>
+                </div>-->
+
+                <!-- Add New Crop Section -->
+                <!--<h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Crop</h3>
+                <div class="form-section">
+                    <label for="crop-common-name">Crop Common Name</label>
+                    <input type="text" id="crop-common-name" placeholder="Enter Common Name">
+
+                    <label for="crop-scientific-name">Crop Scientific Name</label>
+                    <input type="text" id="crop-scientific-name" placeholder="Enter Scientific Name">
+
+                    <label for="crop-image">Crop Image</label>
+                    <input type="file" id="crop-image">
+
+                    <label for="category">Category</label>
+                    <input type="text" id="category" placeholder="Enter Category">
+
+                    <label for="crop-season">Crop Season</label>
+                    <input type="text" id="crop-season" placeholder="Enter Crop Season">
+
+                    <label for="field-code">Field Code</label>
+                    <input type="text" id="field-code" placeholder="Enter Field Code">
+                    <button class="see-all-fields-btn" onclick="openFieldsModal()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
+                        See all fields here
+                    </button><br>
+                    &lt;!&ndash; Popup Modal &ndash;&gt;
+                    <div id="fieldsModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Fields</h3>
+                            <table class="field-table modal-table">
+                                <thead>
+                                <tr>
+                                    <th>Field Code</th>
+                                    <th>Field Name</th>
+                                    <th>Field Location</th>
+                                    <th>Extent Size</th>
+                                    <th>Field Image1</th>
+                                    <th>Field Image2</th>
+                                    <th>Staff</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                &lt;!&ndash; Populate crop data dynamically here &ndash;&gt;
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <button class="save-btn">Save</button>
+                </div>-->
+            </div>
+        </section>
+        <section class="vehicles-management content-section" id="vehicles">
+            <div class="container">
+                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Crop Management <button class="see-all-btn" onclick="openCropsModal()">See All Crops</button></h2>
+                <!-- Popup Modal -->
+                <!--<div id="cropsModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h3>All Crops</h3>
+                        <table class="crop-table modal-table">
+                            <thead>
+                            <tr>
+                                <th>Crop Code</th>
+                                <th>Crop Common Name</th>
+                                <th>Crop Scientific Name</th>
+                                <th>Crop Image</th>
+                                <th>Category</th>
+                                <th>Crop Season</th>
+                                <th>Field Code</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            &lt;!&ndash; Populate crop data dynamically here &ndash;&gt;
+                            </tbody>
+                        </table>
+                    </div>
+                </div>-->
+                <!-- Select Crop Section -->
+                <!--<div class="form-section">
+                    <label for="crop-code">Select Crop - Enter Crop Code</label>
+                    <input type="text" id="crop-code" placeholder="Enter Crop Code">
+                    &lt;!&ndash; Update Existing Crop Section &ndash;&gt;
+                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Crop</h3>
+                    <div class="form-section">
+                        <label for="update-crop-common-name">Crop Common Name</label>
+                        <input type="text" id="update-crop-common-name" placeholder="Enter Common Name">
+
+                        <label for="update-crop-scientific-name">Crop Scientific Name</label>
+                        <input type="text" id="update-crop-scientific-name" placeholder="Enter Scientific Name">
+
+                        <label for="update-crop-image">Crop Image</label>
+                        <input type="file" id="update-crop-image">
+
+                        <label for="update-category">Category</label>
+                        <input type="text" id="update-category" placeholder="Enter Category">
+
+                        <label for="update-crop-season">Crop Season</label>
+                        <input type="text" id="update-crop-season" placeholder="Enter Crop Season">
+
+                        <label for="update-field-code">Field Code</label>
+                        <input type="text" id="update-field-code" placeholder="Enter Field Code">
+
+                        <button class="update-btn">Update</button>
+                    </div>
+                    <table class="crop-table modal-table">
+                        <thead>
+                        <tr>
+                            <th>Crop Common Name</th>
+                            <th>Crop Scientific Name</th>
+                            <th>Crop Image</th>
+                            <th>Category</th>
+                            <th>Crop Season</th>
+                            <th>Field Code</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        &lt;!&ndash; Dynamic crop data rows will go here &ndash;&gt;
+                        </tbody>
+                    </table>
+                    <button class="delete-btn">Delete</button>
+                </div>-->
+
+                <!-- Add New Crop Section -->
+                <!--<h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Crop</h3>
+                <div class="form-section">
+                    <label for="crop-common-name">Crop Common Name</label>
+                    <input type="text" id="crop-common-name" placeholder="Enter Common Name">
+
+                    <label for="crop-scientific-name">Crop Scientific Name</label>
+                    <input type="text" id="crop-scientific-name" placeholder="Enter Scientific Name">
+
+                    <label for="crop-image">Crop Image</label>
+                    <input type="file" id="crop-image">
+
+                    <label for="category">Category</label>
+                    <input type="text" id="category" placeholder="Enter Category">
+
+                    <label for="crop-season">Crop Season</label>
+                    <input type="text" id="crop-season" placeholder="Enter Crop Season">
+
+                    <label for="field-code">Field Code</label>
+                    <input type="text" id="field-code" placeholder="Enter Field Code">
+                    <button class="see-all-fields-btn" onclick="openFieldsModal()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
+                        See all fields here
+                    </button><br>
+                    &lt;!&ndash; Popup Modal &ndash;&gt;
+                    <div id="fieldsModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3>All Fields</h3>
+                            <table class="field-table modal-table">
+                                <thead>
+                                <tr>
+                                    <th>Field Code</th>
+                                    <th>Field Name</th>
+                                    <th>Field Location</th>
+                                    <th>Extent Size</th>
+                                    <th>Field Image1</th>
+                                    <th>Field Image2</th>
+                                    <th>Staff</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                &lt;!&ndash; Populate crop data dynamically here &ndash;&gt;
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <button class="save-btn">Save</button>
+                </div>-->
+            </div>
+        </section>
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- JavaScript for Hamburger Menu -->
+<script>
+    function toggleSidebar() {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu.classList.toggle('active');
+    }
+
+    function navigateTo(sectionId) {
+        // Hide all content sections
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // Show selected section
+        document.getElementById(sectionId).style.display = 'block';
+
+        // Hide the dropdown menu after selection on small screens
+        document.getElementById('dropdownMenu').classList.remove('active');
+    }
+
+    // Initialize to show the Crop Management section by default
+    document.addEventListener('DOMContentLoaded', () => {
+        navigateTo('crop');
+    });
+
+    // Modals in Crop
+    function openCropsModal() {
+        document.getElementById("cropsModal").style.display = "block";
+    }
+    function openFieldsModalInCrop() {
+        document.getElementById("fieldsModalInCrop").style.display = "block";
+    }
+    // Modals in Equipment
+    function openStaffModalInEquipment() {
+        document.getElementById("staffModalInEquipment").style.display = "block";
+    }
+    function openFieldsModalInEquipment() {
+        document.getElementById("fieldsModalInEquipment").style.display = "block";
+    }
+    function openEquipmentModal() {
+        document.getElementById("equipmentsModal").style.display = "block";
+    }
+    // Modals in Field
+    function openFieldsModal() {
+        document.getElementById("fieldsModal").style.display = "block";
+    }
+    function openStaffModalInField() {
+        document.getElementById("staffModalInField").style.display = "block";
+    }
+    // Modals in Monitoring Log
+    function openLogModal() {
+        document.getElementById("logModal").style.display = "block";
+    }
+    function openFieldsModalInLog() {
+        document.getElementById("fieldsModalInLog").style.display = "block";
+    }
+    function openCropModalInLog() {
+        document.getElementById("cropsModalInLog").style.display = "block";
+    }
+    function openStaffModalInLog() {
+        document.getElementById("staffModalInLog").style.display = "block";
+    }
+    function closeModal() {
+        // Modals in crop
+        document.getElementById("cropsModal").style.display = "none";
+        document.getElementById("fieldsModalInCrop").style.display = "none";
+        // Modals in equipment
+        document.getElementById("staffModalInEquipment").style.display = "none";
+        document.getElementById("equipmentsModal").style.display = "none";
+        document.getElementById("fieldsModalInEquipment").style.display = "none";
+        // Modals in field
+        document.getElementById("fieldsModal").style.display = "none";
+        document.getElementById("staffModalInField").style.display = "none";
+        // Modals in monitoring log
+        document.getElementById("logModal").style.display = "none";
+        document.getElementById("fieldsModalInLog").style.display = "none";
+        document.getElementById("cropsModalInLog").style.display = "none";
+        document.getElementById("staffModalInLog").style.display = "none";
+    }
+
+    // Optional: Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        // crops form
+        const cropModal = document.getElementById("cropsModal");
+        if (event.target == cropModal) {
+            cropModal.style.display = "none";
+        }
+        const fieldsModalInCrop = document.getElementById("fieldsModalInCrop");
+        if (event.target == fieldsModalInCrop) {
+            fieldsModalInCrop.style.display = "none";
+        }
+        // equipment form
+        const equipmentsModal = document.getElementById("equipmentsModal");
+        if (event.target == equipmentsModal) {
+            equipmentsModal.style.display = "none";
+        }
+        const staffModalInEquipment = document.getElementById("staffModalInEquipment");
+        if (event.target == staffModalInEquipment) {
+            staffModalInEquipment.style.display = "none";
+        }
+        const fieldsModalInEquipment = document.getElementById("fieldsModalInEquipment");
+        if (event.target == fieldsModalInEquipment) {
+            fieldsModalInEquipment.style.display = "none";
+        }
+        // fields form
+        const fieldsModal = document.getElementById("fieldsModal");
+        if (event.target == fieldsModal) {
+            fieldsModal.style.display = "none";
+        }
+        const staffModalInField = document.getElementById("staffModalInField");
+        if (event.target == staffModalInField) {
+            staffModalInField.style.display = "none";
+        }
+        // monitoring log form
+        const logModal = document.getElementById("logModal");
+        if (event.target == logModal) {
+            logModal.style.display = "none";
+        }
+        const fieldsModalInLog = document.getElementById("fieldsModalInLog");
+        if (event.target == fieldsModalInLog) {
+            fieldsModalInLog.style.display = "none";
+        }
+        const cropsModalInLog = document.getElementById("cropsModalInLog");
+        if (event.target == cropsModalInLog) {
+            cropsModalInLog.style.display = "none";
+        }
+        const staffModalInLog = document.getElementById("staffModalInLog");
+        if (event.target == staffModalInLog) {
+            staffModalInLog.style.display = "none";
+        }
+    };
+</script>
+
+</body>
+</html>
