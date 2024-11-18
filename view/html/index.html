@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crop Management Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -14,7 +14,7 @@
 
     <!-- Header -->
     <header class="header">
-        <div class="logo"> <img src="../assets/icons8-natural-food-50.png" style="width: 30px; height: 30px;">Green Shadow </div>
+        <div class="logo"> <img src="../../assets/icons8-natural-food-50.png" style="width: 30px; height: 30px;">Green Shadow </div>
         <div class="hamburger" onclick="toggleSidebar()">&#9776;</div> <!-- Hamburger Icon -->
         <div class="auth-buttons">
             <button id="login-btn" class="btn btn-secondary">Login</button>
@@ -50,7 +50,7 @@
     <main class="main-content">
         <section class="crop-management content-section" id="crop">
             <div class="container">
-                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Crop Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openCropsModal()">See All Crops</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Crop Management <button id="see-all-crops-btn" class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openCropsModal()">See All Crops</button></h2>
                 <!-- Popup Modal -->
                 <div id="cropsModal" class="modal">
                     <div class="modal-content">
@@ -69,7 +69,7 @@
                                     <th>Field Code</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="crop-table-tbody">
                                 <!-- Populate crop data dynamically here -->
                                 </tbody>
                             </table>
@@ -81,7 +81,7 @@
                     <label for="crop-code">Select Crop - Enter Crop Code</label>
                     <input type="text" class="form-control" id="crop-code" placeholder="Enter Crop Code">
                     <!-- Update Existing Crop Section -->
-                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Crop</h3>
+                    <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Crop</h3>
                     <div class="form-section">
                         <label for="update-crop-common-name">Crop Common Name</label>
                         <input type="text" class="form-control" id="update-crop-common-name" placeholder="Enter Common Name">
@@ -125,7 +125,7 @@
                 </div>
 
                 <!-- Add New Crop Section -->
-                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Crop</h3>
+                <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Crop</h3>
                 <div class="form-section">
                     <label for="crop-common-name">Crop Common Name</label>
                     <input type="text" class="form-control" id="crop-common-name" placeholder="Enter Common Name">
@@ -144,7 +144,7 @@
 
                     <label for="field-code">Field Code</label>
                     <input type="text" class="form-control" id="field-code" placeholder="Enter Field Code">
-                    <p>You can see all fields here: <button class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInCrop()">
+                    <p>You can see all fields here: <button id="see-all-fields-btn-in-crop-form" class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInCrop()">
                         See all fields here
                     </button><br></p>
                     <!-- Popup Modal -->
@@ -165,7 +165,7 @@
                                         <th>Staff</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="field-table-in-crop-table-tbody">
                                     <!-- Populate crop data dynamically here -->
                                     </tbody>
                                 </table>
@@ -178,7 +178,7 @@
         </section>
         <section class="equipment-management content-section" id="equipment">
             <div class="container">
-                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Equipment Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openEquipmentModal()">See All Equipments</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Equipment Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openEquipmentModal()">See All Equipments</button></h2>
                 <!-- Popup Modal -->
                 <div id="equipmentsModal" class="modal">
                     <div class="modal-content">
@@ -208,7 +208,7 @@
                     <label for="equipment-id">Select Equipment - Enter Equipment Id</label>
                     <input type="text" class="form-control" id="equipment-id" placeholder="Enter Equipment Id">
                     <!-- Update Existing Equipment Section -->
-                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Equipment</h3>
+                    <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Equipment</h3>
                     <div class="form-section">
                         <label for="update-equipment-name">Equipment Name</label>
                         <input type="text" class="form-control" id="update-equipment-name" placeholder="Enter Equipment Name">
@@ -253,7 +253,7 @@
                 </div>
 
                 <!-- Add New Equipment Section -->
-                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Equipment</h3>
+                <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Equipment</h3>
                 <div class="form-section">
                     <label for="equipment-name">Equipment Name</label>
                     <input type="text" class="form-control" id="equipment-name" placeholder="Enter Equipment Name">
@@ -346,7 +346,7 @@
         </section>
         <section class="fields-management content-section" id="fields">
             <div class="container">
-                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Fields Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModal()">See All Fields</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Fields Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModal()">See All Fields</button></h2>
                 <!-- Popup Modal -->
                 <div id="fieldsModal" class="modal">
                     <div class="modal-content">
@@ -377,7 +377,7 @@
                     <label for="fieldCode">Select Field - Enter Field Code</label>
                     <input type="text" class="form-control" id="fieldCode" placeholder="Enter Field Code">
                     <!-- Update Existing Field Section -->
-                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Field</h3>
+                    <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Field</h3>
                     <div class="form-section">
                         <label for="update-field-name">Field Name</label>
                         <input type="text" class="form-control" id="update-field-name" placeholder="Enter Field Name">
@@ -424,7 +424,7 @@
                 </div>
 
                 <!-- Add New Field Section -->
-                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Field</h3>
+                <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Field</h3>
                 <div class="form-section">
                     <label for="field-name">Field Name</label>
                     <input type="text" class="form-control" id="field-name" placeholder="Enter Field Name">
@@ -490,7 +490,7 @@
         </section>
         <section class="monitoring-log-management content-section" id="monitoring">
             <div class="container">
-                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Monitoring Log Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openLogModal()">See All Logs</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Monitoring Log Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openLogModal()">See All Logs</button></h2>
                 <!-- Popup Modal -->
                 <div id="logModal" class="modal">
                     <div class="modal-content">
@@ -521,7 +521,7 @@
                     <label for="log-code">Select Log - Enter Log Code</label>
                     <input type="text" class="form-control" id="log-code" placeholder="Enter Log Code">
                     <!-- Update Existing Log Section -->
-                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Log</h3>
+                    <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Log</h3>
                     <div class="form-section">
                         <label for="update-log-date">Log Date</label>
                         <input type="date" class="form-control" id="update-log-date" placeholder="Enter Log Date">
@@ -559,7 +559,7 @@
                 </div>
 
                 <!-- Add New Equipment Section -->
-                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Equipment</h3>
+                <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Equipment</h3>
                 <div class="form-section">
                     <label for="log-date">Log Date</label>
                     <input type="date" class="form-control" id="log-date" placeholder="Enter Log Date">
@@ -672,7 +672,7 @@
         </section>
         <section class="staff-management content-section" id="staff">
             <div class="container">
-                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Staff Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModal()">See All Staff</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Staff Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModal()">See All Staff</button></h2>
                 <!-- Popup Modal -->
                 <div id="staffModal" class="modal">
                     <div class="modal-content">
@@ -712,7 +712,7 @@
                     <label for="staff-id">Select Staff - Enter Staff Id</label>
                     <input type="text" class="form-control" id="staff-id" placeholder="Enter Staff Id">
                     <!-- Update Existing Staff Section -->
-                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Staff</h3>
+                    <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Staff</h3>
                     <div class="form-section">
                         <label for="update-first-name">First Name</label>
                         <input type="text" class="form-control" id="update-first-name" placeholder="Enter First Name">
@@ -800,7 +800,7 @@
                 </div>
 
                 <!-- Add New Staff Section -->
-                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Crop</h3>
+                <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Crop</h3>
                 <div class="form-section">
                     <label for="first-name">First Name</label>
                     <input type="text" class="form-control" id="first-name" placeholder="Enter First Name">
@@ -858,7 +858,7 @@
         </section>
         <section class="vehicles-management content-section" id="vehicles">
             <div class="container">
-                <h2><img src="../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Vehicle Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openVehicleModal()">See All Vehicles</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Vehicle Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openVehicleModal()">See All Vehicles</button></h2>
                 <!-- Popup Modal -->
                 <div id="vehiclesModal" class="modal">
                     <div class="modal-content">
@@ -889,7 +889,7 @@
                     <label for="vehicle-code">Select Vehicle - Enter Vehicle Code</label>
                     <input type="text" class="form-control" id="vehicle-code" placeholder="Enter Vehicle Code">
                     <!-- Update Existing Vehicle Section -->
-                    <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Vehicle</h3>
+                    <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Update Existing Vehicle</h3>
                     <div class="form-section">
                         <label for="update-licence-plate-no">Licence Plate No</label>
                         <input type="text" class="form-control" id="update-licence-plate-no" placeholder="Enter Licence Plate number">
@@ -928,7 +928,7 @@
                 </div>
 
                 <!-- Add New Vehicle Section -->
-                <h3><img src="../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Vehicle</h3>
+                <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Vehicle</h3>
                 <div class="form-section">
                     <label for="licence-plate-no">Licence Plate No</label>
                     <input type="text" class="form-control" id="licence-plate-no" placeholder="Enter Licence Plate number">
@@ -989,13 +989,6 @@
 </div>
 <script src="../../assets/lib/code.jquery.com_jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script type="module" src="../../controller/HealthCheckController.js"></script>
-<script type="module" src="../../controller/CropController.js"></script>
-<script type="module" src="../../controller/EquipmentController.js"></script>
-<script type="module" src="../../controller/FieldController.js"></script>
-<script type="module" src="../../controller/MonitoringLogController.js"></script>
-<script type="module" src="../../controller/StaffController.js"></script>
-<script type="module" src="../../controller/VehicleController.js"></script>
 <!-- JavaScript for Hamburger Menu -->
 <script>
     function toggleSidebar() {
@@ -1158,6 +1151,13 @@
         }
     };
 </script>
+<script type="module" src="../../controller/HealthCheckController.js"></script>
+<script type="module" src="../../controller/CropController.js"></script>
+<script type="module" src="../../controller/EquipmentController.js"></script>
+<script type="module" src="../../controller/FieldController.js"></script>
+<script type="module" src="../../controller/MonitoringLogController.js"></script>
+<script type="module" src="../../controller/StaffController.js"></script>
+<script type="module" src="../../controller/VehicleController.js"></script>
 
 </body>
 </html>
