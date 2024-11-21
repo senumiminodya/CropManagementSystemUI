@@ -89,6 +89,8 @@
                         <label for="update-crop-scientific-name">Crop Scientific Name</label>
                         <input type="text" class="form-control" id="update-crop-scientific-name" placeholder="Enter Scientific Name">
 
+                        <img id="update-crop-image-preview" src="" alt="Crop Image Preview"><br>
+
                         <label for="update-crop-image">Crop Image</label>
                         <input type="file" class="form-control" id="update-crop-image">
 
@@ -101,27 +103,9 @@
                         <label for="update-field-code">Field Code</label>
                         <input type="text" class="form-control" id="update-field-code" placeholder="Enter Field Code">
 
-                        <button class="btn btn-primary update-btn">Update</button>
+                        <button id="crop-update-btn" class="btn btn-primary update-btn">Update</button>
+                        <button id="crop-delete-btn" class="btn btn-danger delete-btn">Delete</button>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover crop-table modal-table">
-                            <thead>
-                            <tr>
-                                <th>Crop Code</th>
-                                <th>Crop Common Name</th>
-                                <th>Crop Scientific Name</th>
-                                <th>Crop Image</th>
-                                <th>Category</th>
-                                <th>Crop Season</th>
-                                <th>Field Code</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Dynamic crop data rows will go here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <button class="btn btn-danger delete-btn">Delete</button>
                 </div>
 
                 <!-- Add New Crop Section -->
@@ -136,8 +120,8 @@
                     <label for="crop-image">Crop Image</label>
                     <input type="file" class="form-control" id="crop-image">
 
-                    <label for="category">Category</label>
-                    <input type="text" class="form-control" id="category" placeholder="Enter Category">
+                    <label for="crop-category">Category</label>
+                    <input type="text" class="form-control" id="crop-category" placeholder="Enter Category">
 
                     <label for="crop-season">Crop Season</label>
                     <input type="text" class="form-control" id="crop-season" placeholder="Enter Crop Season">
@@ -161,8 +145,6 @@
                                         <th>Field Location</th>
                                         <th>Extent Size</th>
                                         <th>Field Image1</th>
-                                        <th>Field Image2</th>
-                                        <th>Staff</th>
                                     </tr>
                                     </thead>
                                     <tbody id="field-table-in-crop-table-tbody">
@@ -172,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary save-btn">Save</button>
+                    <button id="crop-save-btn" class="btn btn-primary save-btn">Save</button>
                 </div>
             </div>
         </section>

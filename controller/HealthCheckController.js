@@ -7,11 +7,9 @@ $(document).ready(function (){
         dataType: 'json',
         success: function (response) {
             console.log("Success: ", response);
-            alert(response); // Displays the response in an alert box
         },
         error: function (xhr, status, error) {
             console.error("Error: ", xhr.responseText);
-            alert("Error: " + xhr.responseText); // Alerts the error if any
         }
     });
 })
