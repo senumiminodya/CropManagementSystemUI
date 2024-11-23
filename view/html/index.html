@@ -160,7 +160,7 @@
         </section>
         <section class="equipment-management content-section" id="equipment">
             <div class="container">
-                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Equipment Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openEquipmentModal()">See All Equipments</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Equipment Management <button id="see-all-equipments-btn" class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openEquipmentModal()">See All Equipments</button></h2>
                 <!-- Popup Modal -->
                 <div id="equipmentsModal" class="modal">
                     <div class="modal-content">
@@ -178,7 +178,7 @@
                                     <th>Field Code</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="equipment-table-tbody">
                                 <!-- Populate equipment data dynamically here -->
                                 </tbody>
                             </table>
@@ -212,26 +212,9 @@
                         <label for="update-field-code-equipment">Field Code</label>
                         <input type="text" class="form-control" id="update-field-code-equipment" placeholder="Enter Field Code">
 
-                        <button class="btn btn-primary update-btn">Update</button>
+                        <button id="equipment-update-btn" class="btn btn-primary update-btn">Update</button>
+                        <button id="equipment-delete-btn" class="btn btn-danger delete-btn">Delete</button>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover equipment-table modal-table">
-                            <thead>
-                            <tr>
-                                <th>Equipment Id</th>
-                                <th>Equipment Name</th>
-                                <th>Equipment Type</th>
-                                <th>Equipment Status</th>
-                                <th>Staff Id</th>
-                                <th>Field Code</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Dynamic equipment data rows will go here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <button class="btn btn-danger delete-btn">Delete</button>
                 </div>
 
                 <!-- Add New Equipment Section -->
@@ -254,7 +237,7 @@
 
                     <label for="staff-id-equipment">Staff Id</label>
                     <input type="text" class="form-control" id="staff-id-equipment" placeholder="Enter Staff Id">
-                    <p>You can see all staff here: <button class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInEquipment()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
+                    <p>You can see all staff here: <button id="see-all-staff-btn-in-equipment-form" class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInEquipment()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
                         See all Staff here
                     </button><br></p>
                     <!-- Popup Modal -->
@@ -270,21 +253,12 @@
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Designation</th>
-                                        <th>Gender</th>
-                                        <th>Joined Date</th>
-                                        <th>DOB</th>
-                                        <th>Address Line1</th>
-                                        <th>Address Line2</th>
-                                        <th>Address Line3</th>
-                                        <th>Address Line4</th>
-                                        <th>Address Line5</th>
                                         <th>Contact No</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>Vehicles</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="staff-table-in-equipment-table-tbody">
                                     <!-- Populate staff data dynamically here -->
                                     </tbody>
                                 </table>
@@ -294,7 +268,7 @@
 
                     <label for="field-code-equipment">Field Code</label>
                     <input type="text" class="form-control" id="field-code-equipment" placeholder="Enter Field Code">
-                    <p>You can see all fields here: <button class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInEquipment()" >
+                    <p>You can see all fields here: <button id="see-all-fields-btn-in-equipment-form" class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInEquipment()" >
                         See all fields here
                     </button><br></p>
                     <!-- Popup Modal -->
@@ -310,25 +284,23 @@
                                         <th>Field Name</th>
                                         <th>Field Location</th>
                                         <th>Extent Size</th>
-                                        <th>Field Image1</th>
-                                        <th>Field Image2</th>
-                                        <th>Staff</th>
+                                        <th>Field Image</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <!-- Populate crop data dynamically here -->
+                                    <tbody id="field-table-in-equipment-table-tbody">
+                                    <!-- Populate field data dynamically here -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary save-btn">Save</button>
+                    <button id="equipment-save-btn" class="btn btn-primary save-btn">Save</button>
                 </div>
             </div>
         </section>
         <section class="fields-management content-section" id="fields">
             <div class="container">
-                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Fields Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModal()">See All Fields</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Fields Management <button id="see-all-fields-btn" class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModal()">See All Fields</button></h2>
                 <!-- Popup Modal -->
                 <div id="fieldsModal" class="modal">
                     <div class="modal-content">
@@ -347,7 +319,7 @@
                                     <th>Staff</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="field-table-tbody">
                                 <!-- Populate field data dynamically here -->
                                 </tbody>
                             </table>
@@ -376,33 +348,17 @@
                         </ul>
                         <label for="update-extent-size">Extent Size</label>
                         <input type="number" step="any" class="form-control" id="update-extent-size" placeholder="Enter Extent Size">
+                        <img id="update-field-image1-preview" src="" alt="Crop Image Preview"><br>
                         <label for="update-field-image1">Field Image1</label>
                         <input type="file" class="form-control" id="update-field-image1">
+                        <img id="update-field-image2-preview" src="" alt="Crop Image Preview"><br>
                         <label for="update-field-image2">Field Image2</label>
                         <input type="file" class="form-control" id="update-field-image2">
                         <label for="update-staff-id-field">Staff Id</label>
                         <input type="text" class="form-control" id="update-staff-id-field" placeholder="Enter Staff Id">
                         <button class="btn btn-primary update-btn">Update</button>
+                        <button class="btn btn-danger delete-btn">Delete</button>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover field-table modal-table">
-                            <thead>
-                            <tr>
-                                <th>Field Code</th>
-                                <th>Field Name</th>
-                                <th>Field Location</th>
-                                <th>Extent Size</th>
-                                <th>Field Image1</th>
-                                <th>Field Image2</th>
-                                <th>Staff</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Populate field data dynamically here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <button class="btn btn-danger delete-btn">Delete</button>
                 </div>
 
                 <!-- Add New Field Section -->
@@ -429,7 +385,7 @@
                     <input type="file" class="form-control" id="field-image2">
                     <label for="staff-id-field">Staff Ids</label>
                     <input type="text" class="form-control" id="staff-id-field" placeholder="Enter Staff Ids">
-                    <p>You can see all staff here: <button class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInField()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
+                    <p>You can see all staff here: <button id="see-all-staff-btn-in-fields-form" class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInField()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
                         See all Staff here
                     </button><br></p>
                     <!-- Popup Modal -->
@@ -445,21 +401,12 @@
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Designation</th>
-                                        <th>Gender</th>
-                                        <th>Joined Date</th>
-                                        <th>DOB</th>
-                                        <th>Address Line1</th>
-                                        <th>Address Line2</th>
-                                        <th>Address Line3</th>
-                                        <th>Address Line4</th>
-                                        <th>Address Line5</th>
                                         <th>Contact No</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>Vehicles</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="staff-table-tbody-in-field-form">
                                     <!-- Populate staff data dynamically here -->
                                     </tbody>
                                 </table>
