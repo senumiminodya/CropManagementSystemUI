@@ -5,6 +5,9 @@ $(document).ready(function (){
         url: baseURL, // Replace the port if different
         method: "GET",
         dataType: 'json',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         success: function (response) {
             console.log("Success: ", response);
         },

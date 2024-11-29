@@ -10,7 +10,7 @@ $(document).ready(function (){
         fetchCrops();
     });
     $('#see-all-fields-btn-in-crop-form').on('click', () =>{
-        fetchFields()
+        fetchFieldsInCrop()
     });
 
 
@@ -19,6 +19,9 @@ $(document).ready(function (){
             url: baseURL,
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Crops retrieved successfully:', data);
                 cropDb.length = 0; // Clear existing crops
@@ -27,6 +30,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch crops:', status, error);
+                alert('Error fetching crops. Please try again later.');
             }
         });
     }
@@ -55,6 +59,9 @@ $(document).ready(function (){
             url: baseURL + '/' + cropCode,
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function(data) {
                 console.log("Crop data retrieved successfully:", data);
                 // Populate the update form fields with fetched data
@@ -87,6 +94,9 @@ $(document).ready(function (){
             }
         });
     });
+    $('#crop-clear-btn').on('click', ()=>{
+        clearUpdateSectionCropFields();
+    })
     $('#crop-delete-btn').on('click', () => {
         let cropCode = $('#crop-code').val()
 
@@ -94,28 +104,28 @@ $(document).ready(function (){
             url: baseURL + '/' + cropCode,
             type: 'DELETE',
             contentType: 'application/json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Crop deleted successfully:', data);
                 alert("Crop Code: " + cropCode + " record deleted successfully");
                 fetchCrops();
-                $('#crop-code').val('');
-                $('#update-crop-common-name').val('');
-                $('#update-crop-scientific-name').val('');
-                $('#update-crop-image').val('');
-                $('#update-category').val('');
-                $('#update-crop-season').val('');
-                $('#update-field-code').val('');
+                clearUpdateSectionCropFields();
             },
             error: function (xhr, status, error) {
                 console.error('Failed to delete crop:', status, error);
             }
         });
     });
-    function fetchFields() {
+    function fetchFieldsInCrop() {
         $.ajax({
             url: "http://localhost:5050/cropManagementSystem/api/v1/fields",
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Fields retrieved successfully:', data);
                 fieldDb.length = 0;
@@ -124,6 +134,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch fields:', status, error);
+                alert('Error fetching fields. Please try again later.');
             }
         });
     }
@@ -170,17 +181,15 @@ $(document).ready(function (){
             data: formData,
             contentType: false, // Important for multipart/form-data
             processData: false,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function(response) {
                 console.log("Crop updated successfully:", response);
                 alert("Crop Code: " + cropCode + " record updated successfully");
                 fetchCrops();
-                $('#crop-code').val('');
-                $('#update-crop-common-name').val('');
-                $('#update-crop-scientific-name').val('');
-                $('#update-crop-image').val('');
-                $('#update-category').val('');
-                $('#update-crop-season').val('');
-                $('#update-field-code').val('');
+                clearUpdateSectionCropFields();
+
             },
             error: function(xhr, status, error) {
                 console.error("Failed to update crop:", status, error);
@@ -216,6 +225,9 @@ $(document).ready(function (){
             data: formData,
             processData: false,
             contentType: false,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (response) {
                 console.log('Crop data saved successfully:', response);
                 alert("Crop data saved successfully")
@@ -235,5 +247,15 @@ $(document).ready(function (){
         $('#crop-category').val('');
         $('#crop-season').val('');
         $('#field-code').val('');
+    }
+    function clearUpdateSectionCropFields() {
+        $('#crop-code').val('');
+        $('#update-crop-common-name').val('');
+        $('#update-crop-scientific-name').val('');
+        $('#update-crop-image-preview').attr('src', '');
+        $('#update-crop-image').val('');
+        $('#update-category').val('');
+        $('#update-crop-season').val('');
+        $('#update-field-code').val('');
     }
 })

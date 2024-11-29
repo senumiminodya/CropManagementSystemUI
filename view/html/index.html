@@ -9,16 +9,56 @@
 </head>
 <body>
 
+<!-- Sign-In Section -->
+<section class="auth-section" id="signin-section" style="margin-top: 100px">
+    <div class="container" style="margin-top: 32px">
+        <h2>Sign In</h2>
+        <form id="signin-form">
+            <label for="signin-email">Email</label>
+            <input type="email" id="signin-email" class="form-control" placeholder="Enter your email" required>
+
+            <label for="signin-password">Password</label>
+            <input type="password" id="signin-password" class="form-control" placeholder="Enter your password" required>
+
+            <button id="signin-btn" type="submit" class="btn btn-primary auth-btn" >Sign In</button>
+        </form>
+        <p>Don't have an account? <a href="#signup-section" onclick="navigateToSignUp()">Sign Up here</a></p>
+    </div>
+</section>
+<!-- Sign-Up Section -->
+<section class="auth-section" id="signup-section" style="display: none; margin-top: 107px;">
+    <div class="container" style="margin-top: 32px">
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" class="form-control" placeholder="Enter your email" required>
+
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" class="form-control" placeholder="Create a password" required>
+
+            <label for="signup-role">Role</label>
+            <select class="form-select form-select-sm" aria-label="Small select example" id="signup-role">
+                <option value="MANAGER">MANAGER</option>
+                <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
+                <option value="SCIENTIST">SCIENTIST</option>
+                <option value="OTHER" selected>OTHER</option>
+            </select><br>
+
+            <button id="signup-btn" type="submit" class="btn btn-primary auth-btn">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="#signin-section" onclick="navigateToSignIn()">Sign In here</a></p>
+    </div>
+</section>
+
 <!-- Dashboard Container -->
 <div class="dashboard">
 
     <!-- Header -->
     <header class="header">
         <div class="logo"> <img src="../../assets/icons8-natural-food-50.png" style="width: 30px; height: 30px;">Green Shadow </div>
-        <div class="hamburger" onclick="toggleSidebar()">&#9776;</div> <!-- Hamburger Icon -->
+        <div id="hamburger" class="hamburger" style="display: none" onclick="toggleSidebar()">&#9776;</div> <!-- Hamburger Icon -->
         <div class="auth-buttons">
-            <button id="login-btn" class="btn btn-secondary">Login</button>
-            <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            <button type="button" id="logout-btn" class="btn btn-secondary">Logout</button>
         </div>
     </header>
 
@@ -105,6 +145,7 @@
 
                         <button id="crop-update-btn" class="btn btn-primary update-btn">Update</button>
                         <button id="crop-delete-btn" class="btn btn-danger delete-btn">Delete</button>
+                        <button id="crop-clear-btn" class="btn btn-secondary delete-btn">Clear</button>
                     </div>
                 </div>
 
@@ -214,6 +255,7 @@
 
                         <button id="equipment-update-btn" class="btn btn-primary update-btn">Update</button>
                         <button id="equipment-delete-btn" class="btn btn-danger delete-btn">Delete</button>
+                        <button id="equipment-clear-btn" class="btn btn-secondary delete-btn">Clear</button>
                     </div>
                 </div>
 
@@ -348,16 +390,17 @@
                         </ul>
                         <label for="update-extent-size">Extent Size</label>
                         <input type="number" step="any" class="form-control" id="update-extent-size" placeholder="Enter Extent Size">
-                        <img id="update-field-image1-preview" src="" alt="Crop Image Preview"><br>
+                        <img id="update-field-image1-preview" src="" alt="Field Image Preview"><br>
                         <label for="update-field-image1">Field Image1</label>
                         <input type="file" class="form-control" id="update-field-image1">
-                        <img id="update-field-image2-preview" src="" alt="Crop Image Preview"><br>
+                        <img id="update-field-image2-preview" src="" alt="Field Image Preview"><br>
                         <label for="update-field-image2">Field Image2</label>
                         <input type="file" class="form-control" id="update-field-image2">
                         <label for="update-staff-id-field">Staff Id</label>
                         <input type="text" class="form-control" id="update-staff-id-field" placeholder="Enter Staff Id">
-                        <button class="btn btn-primary update-btn">Update</button>
-                        <button class="btn btn-danger delete-btn">Delete</button>
+                        <button id="field-update-btn" class="btn btn-primary update-btn">Update</button>
+                        <button id="field-delete-btn" class="btn btn-danger delete-btn">Delete</button>
+                        <button id="field-clear-btn" class="btn btn-secondary delete-btn">Clear</button>
                     </div>
                 </div>
 
@@ -413,7 +456,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary save-btn">Save</button>
+                    <button id="field-save-btn" class="btn btn-primary save-btn">Save</button>
                 </div>
             </div>
         </section>
@@ -601,7 +644,7 @@
         </section>
         <section class="staff-management content-section" id="staff">
             <div class="container">
-                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Staff Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModal()">See All Staff</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Staff Management <button id="see-all-staff-btn" class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModal()">See All Staff</button></h2>
                 <!-- Popup Modal -->
                 <div id="staffModal" class="modal">
                     <div class="modal-content">
@@ -626,10 +669,9 @@
                                     <th>Contact No</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Vehicles</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="staff-table-tbody">
                                 <!-- Populate staff data dynamically here -->
                                 </tbody>
                             </table>
@@ -691,45 +733,16 @@
                             <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
                             <option value="SCIENTIST">SCIENTIST</option>
                             <option value="OTHER" selected>OTHER</option>
-                        </select>
+                        </select><br>
 
-                        <label for="update-vehicle-code-staff">Vehicle Codes</label>
-                        <input type="text" class="form-control" id="update-vehicle-code-staff" placeholder="Enter Vehicle Codes">
-
-                        <button class="btn btn-primary update-btn">Update</button>
+                        <button id="staff-update-btn" class="btn btn-primary update-btn">Update</button>
+                        <button id="staff-delete-btn" class="btn btn-danger delete-btn">Delete</button>
+                        <button id="staff-clear-btn" class="btn btn-secondary delete-btn">Clear</button>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover staff-table modal-table">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Designation</th>
-                                <th>Gender</th>
-                                <th>Joined Date</th>
-                                <th>DOB</th>
-                                <th>Address Line1</th>
-                                <th>Address Line2</th>
-                                <th>Address Line3</th>
-                                <th>Address Line4</th>
-                                <th>Address Line5</th>
-                                <th>Contact No</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Vehicles</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Dynamic staff data rows will go here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <button class="btn btn-danger delete-btn">Delete</button>
                 </div>
 
                 <!-- Add New Staff Section -->
-                <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Crop</h3>
+                <h3><img src="../../assets/icons8-natural-food-50%20(1).png" style="width: 20px; height: 20px; margin-right: 10px">Add New Staff</h3>
                 <div class="form-section">
                     <label for="first-name">First Name</label>
                     <input type="text" class="form-control" id="first-name" placeholder="Enter First Name">
@@ -781,13 +794,13 @@
                         <option value="OTHER" selected>OTHER</option>
                     </select>
                     <br>
-                    <button class="btn btn-primary save-btn">Save</button>
+                    <button id="staff-save-btn" class="btn btn-primary save-btn">Save</button>
                 </div>
             </div>
         </section>
         <section class="vehicles-management content-section" id="vehicles">
             <div class="container">
-                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Vehicle Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openVehicleModal()">See All Vehicles</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Vehicle Management <button id="see-all-vehicle-btn" class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openVehicleModal()">See All Vehicles</button></h2>
                 <!-- Popup Modal -->
                 <div id="vehiclesModal" class="modal">
                     <div class="modal-content">
@@ -806,7 +819,7 @@
                                     <th>Remarks</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="vehicle-table-tbody">
                                 <!-- Populate vehicle data dynamically here -->
                                 </tbody>
                             </table>
@@ -831,29 +844,14 @@
                             <option value="AVAILABLE" selected>AVAILABLE</option>
                             <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
                         </select>
+                        <label for="update-vehicle-remarks">Remarks</label>
+                        <input type="text" class="form-control" id="update-vehicle-remarks" placeholder="Enter Remarks of Vehicle">
                         <label for="update-staff-id-vehicle">Staff Id</label>
                         <input type="text" class="form-control" id="update-staff-id-vehicle" placeholder="Enter Staff Id">
-                        <button class="btn btn-primary update-btn">Update</button>
+                        <button id="vehicle-update-btn" class="btn btn-primary update-btn">Update</button>
+                        <button id="vehicle-delete-btn" class="btn btn-danger delete-btn">Delete</button>
+                        <button id="vehicle-clear-btn" class="btn btn-secondary delete-btn">Clear</button>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover vehicle-table modal-table">
-                            <thead>
-                            <tr>
-                                <th>Vehicle Code</th>
-                                <th>Licence Plate No</th>
-                                <th>Category</th>
-                                <th>Fuel Type</th>
-                                <th>Status</th>
-                                <th>Staff Id</th>
-                                <th>Remarks</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Populate vehicle data dynamically here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <button class="btn btn-danger delete-btn">Delete</button>
                 </div>
 
                 <!-- Add New Vehicle Section -->
@@ -870,9 +868,11 @@
                         <option value="AVAILABLE" selected>AVAILABLE</option>
                         <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
                     </select>
+                    <label for="vehicle-remarks">Remarks</label>
+                    <input type="text" class="form-control" id="vehicle-remarks" placeholder="Enter Remarks of Vehicle">
                     <label for="staff-id-vehicle">Staff Id</label>
                     <input type="text" class="form-control" id="staff-id-vehicle" placeholder="Enter Staff Id">
-                    <p>You can see all staff here: <button class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInVehicle()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
+                    <p>You can see all staff here: <button id="see-all-staff-btn-in-vehicle-form" class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInVehicle()" style="background-color: #eeeeee; color: black; border: 1px solid black; padding: 5px 5px; cursor: pointer; ">
                         See all Staff here
                     </button><br></p>
                     <!-- Popup Modal -->
@@ -888,28 +888,20 @@
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Designation</th>
-                                        <th>Gender</th>
-                                        <th>Joined Date</th>
-                                        <th>DOB</th>
-                                        <th>Address Line1</th>
-                                        <th>Address Line2</th>
-                                        <th>Address Line3</th>
-                                        <th>Address Line4</th>
-                                        <th>Address Line5</th>
                                         <th>Contact No</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>Vehicles</th>
+                                        <th>Vehicle Codes</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="staff-table-in-vehicle-table-tbody">
                                     <!-- Populate staff data dynamically here -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary save-btn">Save</button>
+                    <button id="vehicle-save-btn" class="btn btn-primary save-btn">Save</button>
                 </div>
             </div>
         </section>
@@ -917,170 +909,10 @@
 
 </div>
 <script src="../../assets/lib/code.jquery.com_jquery-3.7.1.min.js"></script>
+<script src="../../controller/Alert.js"></script>
+<script src="../script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <!-- JavaScript for Hamburger Menu -->
-<script>
-    function toggleSidebar() {
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        dropdownMenu.classList.toggle('active');
-    }
-
-    function navigateTo(sectionId) {
-        // Hide all content sections
-        document.querySelectorAll('.content-section').forEach(section => {
-            section.style.display = 'none';
-        });
-
-        // Show selected section
-        document.getElementById(sectionId).style.display = 'block';
-
-        // Hide the dropdown menu after selection on small screens
-        document.getElementById('dropdownMenu').classList.remove('active');
-    }
-
-    // Initialize to show the Crop Management section by default
-    document.addEventListener('DOMContentLoaded', () => {
-        navigateTo('crop');
-    });
-
-    // Modals in Crop
-    function openCropsModal() {
-        document.getElementById("cropsModal").style.display = "block";
-    }
-    function openFieldsModalInCrop() {
-        document.getElementById("fieldsModalInCrop").style.display = "block";
-    }
-    // Modals in Equipment
-    function openStaffModalInEquipment() {
-        document.getElementById("staffModalInEquipment").style.display = "block";
-    }
-    function openFieldsModalInEquipment() {
-        document.getElementById("fieldsModalInEquipment").style.display = "block";
-    }
-    function openEquipmentModal() {
-        document.getElementById("equipmentsModal").style.display = "block";
-    }
-    // Modals in Field
-    function openFieldsModal() {
-        document.getElementById("fieldsModal").style.display = "block";
-    }
-    function openStaffModalInField() {
-        document.getElementById("staffModalInField").style.display = "block";
-    }
-    // Modals in Monitoring Log
-    function openLogModal() {
-        document.getElementById("logModal").style.display = "block";
-    }
-    function openFieldsModalInLog() {
-        document.getElementById("fieldsModalInLog").style.display = "block";
-    }
-    function openCropModalInLog() {
-        document.getElementById("cropsModalInLog").style.display = "block";
-    }
-    function openStaffModalInLog() {
-        document.getElementById("staffModalInLog").style.display = "block";
-    }
-    // Modals in Staff
-    function openStaffModal() {
-        document.getElementById("staffModal").style.display = "block";
-    }
-    // Modals in Vehicle
-    function openVehicleModal() {
-        document.getElementById("vehiclesModal").style.display = "block";
-    }
-    function openStaffModalInVehicle() {
-        document.getElementById("staffModalInVehicle").style.display = "block";
-    }
-    function closeModal() {
-        // Modals in crop
-        document.getElementById("cropsModal").style.display = "none";
-        document.getElementById("fieldsModalInCrop").style.display = "none";
-        // Modals in equipment
-        document.getElementById("staffModalInEquipment").style.display = "none";
-        document.getElementById("equipmentsModal").style.display = "none";
-        document.getElementById("fieldsModalInEquipment").style.display = "none";
-        // Modals in field
-        document.getElementById("fieldsModal").style.display = "none";
-        document.getElementById("staffModalInField").style.display = "none";
-        // Modals in monitoring log
-        document.getElementById("logModal").style.display = "none";
-        document.getElementById("fieldsModalInLog").style.display = "none";
-        document.getElementById("cropsModalInLog").style.display = "none";
-        document.getElementById("staffModalInLog").style.display = "none";
-        // modals in staff
-        document.getElementById("staffModal").style.display = "none";
-        // modals in vehicle
-        document.getElementById("vehiclesModal").style.display = "none";
-        document.getElementById("staffModalInVehicle").style.display = "none";
-    }
-
-    // Optional: Close the modal when clicking outside of it
-    window.onclick = function(event) {
-        // crops form
-        const cropModal = document.getElementById("cropsModal");
-        if (event.target == cropModal) {
-            cropModal.style.display = "none";
-        }
-        const fieldsModalInCrop = document.getElementById("fieldsModalInCrop");
-        if (event.target == fieldsModalInCrop) {
-            fieldsModalInCrop.style.display = "none";
-        }
-        // equipment form
-        const equipmentsModal = document.getElementById("equipmentsModal");
-        if (event.target == equipmentsModal) {
-            equipmentsModal.style.display = "none";
-        }
-        const staffModalInEquipment = document.getElementById("staffModalInEquipment");
-        if (event.target == staffModalInEquipment) {
-            staffModalInEquipment.style.display = "none";
-        }
-        const fieldsModalInEquipment = document.getElementById("fieldsModalInEquipment");
-        if (event.target == fieldsModalInEquipment) {
-            fieldsModalInEquipment.style.display = "none";
-        }
-        // fields form
-        const fieldsModal = document.getElementById("fieldsModal");
-        if (event.target == fieldsModal) {
-            fieldsModal.style.display = "none";
-        }
-        const staffModalInField = document.getElementById("staffModalInField");
-        if (event.target == staffModalInField) {
-            staffModalInField.style.display = "none";
-        }
-        // monitoring log form
-        const logModal = document.getElementById("logModal");
-        if (event.target == logModal) {
-            logModal.style.display = "none";
-        }
-        const fieldsModalInLog = document.getElementById("fieldsModalInLog");
-        if (event.target == fieldsModalInLog) {
-            fieldsModalInLog.style.display = "none";
-        }
-        const cropsModalInLog = document.getElementById("cropsModalInLog");
-        if (event.target == cropsModalInLog) {
-            cropsModalInLog.style.display = "none";
-        }
-        const staffModalInLog = document.getElementById("staffModalInLog");
-        if (event.target == staffModalInLog) {
-            staffModalInLog.style.display = "none";
-        }
-        //staff form
-        const staffModal = document.getElementById("staffModal");
-        if (event.target == staffModal) {
-            staffModal.style.display = "none";
-        }
-        //vehicles form
-        const vehiclesModal = document.getElementById("vehiclesModal");
-        if (event.target == vehiclesModal) {
-            vehiclesModal.style.display = "none";
-        }
-        const staffModalInVehicle = document.getElementById("staffModalInVehicle");
-        if (event.target == staffModalInVehicle) {
-            staffModalInVehicle.style.display = "none";
-        }
-    };
-</script>
-<script type="module" src="../../controller/HealthCheckController.js"></script>
 <script type="module" src="../../controller/CropController.js"></script>
 <script type="module" src="../../controller/EquipmentController.js"></script>
 <script type="module" src="../../controller/FieldController.js"></script>

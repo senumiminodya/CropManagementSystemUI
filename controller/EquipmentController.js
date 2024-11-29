@@ -21,6 +21,9 @@ $(document).ready(function () {
             url: baseURL,
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Equipments retrieved successfully:', data);
                 equipmentDb.length = 0; // Clear existing equipments
@@ -59,6 +62,9 @@ $(document).ready(function () {
             url: baseURL + '/' + equipmentId,
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log("Equipment data retrieved successfully:", data);
                 $('#update-equipment-name').val(data.name);
@@ -77,6 +83,9 @@ $(document).ready(function () {
             url: "http://localhost:5050/cropManagementSystem/api/v1/fields",
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Fields retrieved successfully:', data);
                 fieldDb.length = 0;
@@ -109,6 +118,9 @@ $(document).ready(function () {
             url: "http://localhost:5050/cropManagementSystem/api/v1/staff",
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Staff retrieved successfully:', data);
                 staffDb.length = 0;
@@ -148,22 +160,23 @@ $(document).ready(function () {
         let staffId = $(this).find(".equipment_form_staff_id_value").text();
         $("#staff-id-equipment").val(staffId);
     });
+    $('#equipment-clear-btn').on('click', ()=>{
+       clearUpdateSectionEquipmentFields();
+    });
 
     $('#equipment-delete-btn').on('click', () => {
         $.ajax({
             url: baseURL + '/' + equipmentId,
             type: 'DELETE',
             contentType: 'application/json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Equipment deleted successfully:', data);
                 alert("Equipment with ID: " + equipmentId + " deleted successfully");
                 fetchEquipments();
-                $('#equipment-id').val('');
-                $('#update-equipment-name').val('');
-                $('#update-equipment-type').val('');
-                $('#update-equipment-status').val('');
-                $('#update-staff-id-equipment').val('');
-                $('#update-field-code-equipment').val('');
+                clearUpdateSectionEquipmentFields();
             },
             error: function (xhr, status, error) {
                 console.error('Failed to delete equipment:', status, error);
@@ -186,16 +199,15 @@ $(document).ready(function () {
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(data),
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (response) {
                 console.log("Equipment updated successfully:", response);
                 alert("Equipment with ID: " + equipmentId + " updated successfully");
                 fetchEquipments();
-                $('#equipment-id').val('');
-                $('#update-equipment-name').val('');
-                $('#update-equipment-type').val('');
-                $('#update-equipment-status').val('');
-                $('#update-staff-id-equipment').val('');
-                $('#update-field-code-equipment').val('');
+                clearUpdateSectionEquipmentFields();
+
             },
             error: function (xhr, status, error) {
                 console.error("Failed to update equipment:", status, error);
@@ -217,6 +229,9 @@ $(document).ready(function () {
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (response) {
                 console.log('Equipment data saved successfully:', response);
                 alert("Equipment data saved successfully");
@@ -229,6 +244,14 @@ $(document).ready(function () {
             }
         });
     });
+    function clearUpdateSectionEquipmentFields() {
+        $('#equipment-id').val('');
+        $('#update-equipment-name').val('');
+        $('#update-equipment-type').val('');
+        $('#update-equipment-status').val('');
+        $('#update-staff-id-equipment').val('');
+        $('#update-field-code-equipment').val('');
+    }
 
     function clearEquipmentFields() {
         $('#equipment-name').val('');

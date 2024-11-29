@@ -3,9 +3,9 @@ import {staffDb} from "../db/Db.js";
 
 $(document).ready(function (){
     const baseURL = "http://localhost:5050/cropManagementSystem/api/v1/fields";
-    var fieldCode;
-    var fieldImage1;
-    var fieldImage2;
+    let fieldCode;
+    let fieldImage1;
+    let fieldImage2;
 
     $('#see-all-fields-btn').on('click',()=>{
         fetchFields();
@@ -18,6 +18,9 @@ $(document).ready(function (){
             url: baseURL,
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Fields retrieved successfully:', data);
                 fieldDb.length = 0; // Clear existing fields
@@ -26,6 +29,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch fields:', status, error);
+                alert('Error fetching fields. Please try again later.');
             }
         });
     }
@@ -34,6 +38,9 @@ $(document).ready(function (){
             url: "http://localhost:5050/cropManagementSystem/api/v1/staff",
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function (data) {
                 console.log('Staff retrieved successfully:', data);
                 staffDb.length = 0; // Clear existing staff
@@ -50,7 +57,20 @@ $(document).ready(function (){
         $('#field-table-tbody').empty();
         console.log(fieldDb);
         fieldDb.forEach((item) => {
-            let staffIds = getStaffIds(item.staff);
+            let staffIds = [];
+            try {
+                // Ensure `item.staff` is an array of strings
+                if (Array.isArray(item.staff)) {
+                    staffIds = item.staff.map((staffString) => {
+                        const match = staffString.match(/id='(STAFF-[\w\d]+)'/); // Extract id using regex
+                        return match ? match[1] : null; // Return id if matched, otherwise null
+                    }).filter(id => id !== null); // Filter out null values
+                } else {
+                    console.error("Error: staff data is not an array");
+                }
+            } catch (error) {
+                console.error("Error processing staff data:", error);
+            }
             let record = `<tr>
                 <td class="field_code_value">${item.fieldCode}</td>
                 <td class="field_name_value">${item.fieldName}</td>
@@ -82,29 +102,33 @@ $(document).ready(function (){
     }
     // Event handler for selecting the field code
     $('#field-table-tbody').on('click', 'tr', function () {
-        let fieldCode = $(this).find(".field_code_value").text();
+        fieldCode = $(this).find(".field_code_value").text();
         $("#fieldCode").val(fieldCode);
-    });
-    // Event handler for selecting the staff id
-    $('#staff-table-tbody-in-field-form').on('click', 'tr', function () {
-        let staffId = $(this).find(".field_form_staff_id_value").text();
-        $("#staff-id-field").val(staffId);
     });
     // Function to extract Staff IDs as an array
     function getStaffIds(staffArray) {
-        return staffArray.map(staff => {
-            const match = staff.match(/id=(STAFF-[\w\d]+)/); // Extract the ID using a regex
-            return match ? match[1] : null; // Return the matched ID or null if no match
-        }).filter(id => id); // Filter out any null values
+        if (!Array.isArray(staffArray)) {
+            console.error("Invalid staff data. Expected an array.");
+            return [];
+        }
+        return staffArray
+            .map((staffString) => {
+                const match = staffString.match(/id='(STAFF-[\w\d]+)'/); // Extract id using regex
+                return match ? match[1] : null; // Return id if matched, otherwise null
+            })
+            .filter((id) => id !== null); // Filter out null values
     }
     /* Search a field from table */
     $('#field-table-tbody').on('click', 'tr', function (){
-        fieldCode = $(this).find(".field_code_value").text();
+        let fieldCode = $(this).find(".field_code_value").text();
         $("#fieldCode").val(fieldCode);
         $.ajax({
             url: baseURL + '/' + fieldCode,
             type: 'GET',
             dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             success: function(data) {
                 console.log("Field data retrieved successfully:", data);
                 // Populate the update form fields with fetched data
@@ -159,5 +183,157 @@ $(document).ready(function (){
             }
         });
     });
+    $('#field-clear-btn').on('click', ()=>{
+        clearUpdateSectionFieldFields();
+    });
+    $('#field-delete-btn').on('click', () => {
+        let fieldCode = $('#fieldCode').val();
+
+        $.ajax({
+            url: baseURL + '/' + fieldCode,
+            type: 'DELETE',
+            contentType: 'application/json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            success: function (data) {
+                console.log('Field deleted successfully:', data);
+                alert("Field Code: " + fieldCode + " record deleted successfully");
+                fetchFields();
+                clearUpdateSectionFieldFields();
+            },
+            error: function (xhr, status, error) {
+                console.error('Failed to delete field:', status, error);
+            }
+        });
+    });
+    $('#field-update-btn').on('click', () => {
+        let fieldCode = $('#fieldCode').val();
+        let fieldName = $('#update-field-name').val();
+        let longitude = parseFloat($('#update-longitude').val());
+        let latitude = parseFloat($('#update-latitude').val());
+        let extentSize = parseFloat($('#update-extent-size').val());
+
+        // Parse the staff IDs entered as a comma-separated string into an array
+        let staffIds = $('#update-staff-id-field').val().split(',').map(id => id.trim());
+
+        // Prepare FormData
+        const formData = new FormData();
+
+        // Append JSON data
+        const fieldData = {
+            fieldName: fieldName,
+            fieldLocation: {
+                x: longitude,
+                y: latitude
+            },
+            extentSize: extentSize,
+            staff: staffIds // Add staff IDs array directly here
+        };
+        formData.append('fieldData', JSON.stringify(fieldData));
+
+        // Handle file inputs
+        const appendFile = (inputSelector, formDataKey) => {
+            const inputElement = $(inputSelector).get(0);
+            if (inputElement && inputElement.files.length > 0) {
+                formData.append(formDataKey, inputElement.files[0]);
+            }
+        };
+
+        appendFile('#update-field-image1', 'fieldImage1');
+        appendFile('#update-field-image2', 'fieldImage2');
+
+        // Send AJAX request
+        $.ajax({
+            url: baseURL + "/" + fieldCode,
+            type: 'PUT',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            success: (response) => {
+                alert('Field updated successfully!');
+                clearUpdateSectionFieldFields();
+                console.log('Response:', response);
+            },
+            error: (err) => {
+                alert('Error updating field.');
+                console.error('Error:', err);
+            }
+        });
+    });
+    $('#field-save-btn').on('click', () => {
+        // Create a FormData object to handle file uploads
+        const formData = new FormData();
+
+        // Collect field data
+        const fieldData = {
+            fieldName: $('#field-name').val(),
+            fieldLocation: {
+                x: parseFloat($('#longitude').val()),
+                y: parseFloat($('#latitude').val())
+            },
+            extentSize: parseFloat($('#extent-size').val()),
+            staff: $('#staff-id-field').val().split(',').map(id => id.trim()) // Assuming staff IDs are comma-separated
+        };
+
+        // Append JSON field data to FormData
+        formData.append('fieldData', JSON.stringify(fieldData));
+
+        // Append image files to FormData
+        const fieldImage1 = $('#field-image1')[0].files[0];
+        const fieldImage2 = $('#field-image2')[0].files[0];
+        if (fieldImage1) {
+            formData.append('fieldImage1', fieldImage1);
+        }
+        if (fieldImage2) {
+            formData.append('fieldImage2', fieldImage2);
+        }
+
+        // Send the AJAX request
+        $.ajax({
+            url: baseURL,
+            type: 'POST',
+            data: formData,
+            processData: false, // Necessary for FormData
+            contentType: false, // Necessary for FormData
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            success: (response) => {
+                alert('Field saved successfully!');
+                console.log(response);
+                // Clear the form fields after successful save
+                clearFields();
+            },
+            error: (error) => {
+                alert('Error saving field!');
+                console.error(error);
+            }
+        });
+    });
+    function clearUpdateSectionFieldFields() {
+        $('#fieldCode').val('');
+        $('#update-field-name').val('');
+        $('#update-longitude').val('');
+        $('#update-latitude').val('');
+        $('#update-extent-size').val('');
+        $('#update-field-image1-preview').attr('src', '');
+        $('#update-field-image1').val('');
+        $('#update-field-image2-preview').attr('src', '');
+        $('#update-field-image2').val('');
+        $('#update-staff-id-field').val('');
+    }
+    function clearFields() {
+        $('#field-name').val('');
+        $('#longitude').val('');
+        $('#latitude').val('');
+        $('#extent-size').val('');
+        $('#field-image1').val('');
+        $('#field-image2').val('');
+        $('#staff-id-field').val('');
+    }
 
 });
