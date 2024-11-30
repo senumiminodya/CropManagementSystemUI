@@ -1,6 +1,3 @@
-import {fieldDb} from "../db/Db.js";
-import {staffDb} from "../db/Db.js";
-
 $(document).ready(function (){
     const baseURL = "http://localhost:5050/cropManagementSystem/api/v1/fields";
     let fieldCode;
@@ -23,9 +20,7 @@ $(document).ready(function (){
             },
             success: function (data) {
                 console.log('Fields retrieved successfully:', data);
-                fieldDb.length = 0; // Clear existing fields
-                fieldDb.push(...data); // Add fetched fields
-                loadFieldsTable();
+                loadFieldsTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch fields:', status, error);
@@ -43,9 +38,7 @@ $(document).ready(function (){
             },
             success: function (data) {
                 console.log('Staff retrieved successfully:', data);
-                staffDb.length = 0; // Clear existing staff
-                staffDb.push(...data); // Add fetched staff
-                loadStaffTableInField();
+                loadStaffTableInField(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch staff:', status, error);
@@ -53,24 +46,12 @@ $(document).ready(function (){
         });
     }
     /* Load fields to the table */
-    function loadFieldsTable() {
+    function loadFieldsTable(fields) {
         $('#field-table-tbody').empty();
-        console.log(fieldDb);
-        fieldDb.forEach((item) => {
-            let staffIds = [];
-            try {
-                // Ensure `item.staff` is an array of strings
-                if (Array.isArray(item.staff)) {
-                    staffIds = item.staff.map((staffString) => {
-                        const match = staffString.match(/id='(STAFF-[\w\d]+)'/); // Extract id using regex
-                        return match ? match[1] : null; // Return id if matched, otherwise null
-                    }).filter(id => id !== null); // Filter out null values
-                } else {
-                    console.error("Error: staff data is not an array");
-                }
-            } catch (error) {
-                console.error("Error processing staff data:", error);
-            }
+        console.log(fields);
+        fields.forEach((item) => {
+            const staffIds = Array.isArray(item.staff) ? item.staff : [];
+            const staffDisplay = staffIds.join(", "); // Convert to comma-separated string for display
             let record = `<tr>
                 <td class="field_code_value">${item.fieldCode}</td>
                 <td class="field_name_value">${item.fieldName}</td>
@@ -78,16 +59,16 @@ $(document).ready(function (){
                 <td class="field_extent_size_value">${item.extentSize}</td>
                 <td class="field_image1_value"><img src="${baseURL}/image/${item.fieldImage1}" alt="Field Image 1" style="width: 100px; height: 100px;"></td>
                 <td class="field_image2_value"><img src="${baseURL}/image/${item.fieldImage2}" alt="Field Image 2" style="width: 100px; height: 100px;"></td>
-                <td class="staff_id_value">${staffIds.join(", ")}</td>
+                <td class="staff_id_value">${staffDisplay}</td>
             </tr>`;
             $('#field-table-tbody').append(record);
         });
     }
     /* Load fields to the table */
-    function loadStaffTableInField() {
+    function loadStaffTableInField(staff) {
         $('#staff-table-tbody-in-field-form').empty();
-        console.log(staffDb);
-        staffDb.forEach((item) => {
+        console.log(staff);
+        staff.forEach((item) => {
             let record = `<tr>
                 <td class="field_form_staff_id_value">${item.id}</td>
                 <td class="field_form_staff_first_name_value">${item.firstName}</td>  
@@ -136,12 +117,7 @@ $(document).ready(function (){
                 $('#update-longitude').val(data.fieldLocation.x);
                 $('#update-latitude').val(data.fieldLocation.y);
                 $('#update-extent-size').val(data.extentSize);
-                console.log(data.staff);
-                let staffIds = getStaffIds(data.staff);
-                console.log("Extracted Staff IDs Array:", staffIds);
-                //$('#update-staff-id-field').val(staffIds);
-                // Use the array for any other purpose as required
-                $('#update-staff-id-field').val(staffIds.join(", "));
+                $('#update-staff-id-field').val(data.staff);
                 // Update the image preview if an image is available
                 if (data.fieldImage1) {
                     console.log(data.fieldImage1)
@@ -255,6 +231,7 @@ $(document).ready(function (){
             },
             success: (response) => {
                 alert('Field updated successfully!');
+                fetchFields();
                 clearUpdateSectionFieldFields();
                 console.log('Response:', response);
             },
@@ -305,7 +282,7 @@ $(document).ready(function (){
             success: (response) => {
                 alert('Field saved successfully!');
                 console.log(response);
-                // Clear the form fields after successful save
+                fetchFields();
                 clearFields();
             },
             error: (error) => {

@@ -1,6 +1,3 @@
-import {cropDb} from "../db/Db.js";
-import {fieldDb} from "../db/Db.js";
-
 $(document).ready(function (){
     const baseURL = "http://localhost:5050/cropManagementSystem/api/v1/crops"
     var cropCode;
@@ -24,9 +21,7 @@ $(document).ready(function (){
             },
             success: function (data) {
                 console.log('Crops retrieved successfully:', data);
-                cropDb.length = 0; // Clear existing crops
-                cropDb.push(...data); // Add fetched crops
-                loadCropTable();
+                loadCropTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch crops:', status, error);
@@ -35,10 +30,10 @@ $(document).ready(function (){
         });
     }
     /* Load crops to the table */
-    function loadCropTable() {
+    function loadCropTable(crops) {
         $('#crop-table-tbody').empty();
-        console.log(cropDb);
-        cropDb.forEach((item) =>{
+        console.log(crops);
+        crops.forEach((item) =>{
             let record = `<tr>
                 <td class="crop_code_value">${item.cropCode}</td>
                 <td class="crop_common_name_value">${item.cropCommonName}</td>
@@ -128,9 +123,7 @@ $(document).ready(function (){
             },
             success: function (data) {
                 console.log('Fields retrieved successfully:', data);
-                fieldDb.length = 0;
-                fieldDb.push(...data);
-                loadFieldTable();
+                loadFieldTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch fields:', status, error);
@@ -138,11 +131,11 @@ $(document).ready(function (){
             }
         });
     }
-    function loadFieldTable() {
+    function loadFieldTable(fields) {
         $('#field-table-in-crop-table-tbody').empty();
-        console.log(fieldDb);
+        console.log(fields);
 
-        fieldDb.forEach((item) => {
+        fields.forEach((item) => {
             // Create a new record string
             let record = `<tr>
                 <td class="crop_form_field_code_value">${item.fieldCode}</td>

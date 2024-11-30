@@ -1,5 +1,3 @@
-import {equipmentDb, staffDb} from "../db/Db.js";
-
 $(document).ready(function (){
     const baseURL = "http://localhost:5050/cropManagementSystem/api/v1/staff";
     let staffId;
@@ -18,20 +16,18 @@ $(document).ready(function (){
             },
             success: function (data) {
                 console.log('Staff retrieved successfully:', data);
-                staffDb.length = 0; // Clear existing staff
-                staffDb.push(...data); // Add fetched staff
-                loadStaffTable();
+                loadStaffTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch staff:', status, error);
             }
         });
     }
-    function loadStaffTable() {
+    function loadStaffTable(staff) {
         $('#staff-table-tbody').empty();
-        console.log(staffDb);
+        console.log(staff);
 
-        staffDb.forEach((item) => {
+        staff.forEach((item) => {
             let record = `<tr>
                 <td class="staff_id_value">${item.id}</td>
                 <td class="staff_firstName_value">${item.firstName}</td>

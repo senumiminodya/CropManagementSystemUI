@@ -1,6 +1,3 @@
-import {equipmentDb, vehicleDb} from "../db/Db.js";
-import {staffDb} from "../db/Db.js";
-
 $(document).ready(function (){
     const baseURL = "http://localhost:5050/cropManagementSystem/api/v1/vehicles";
     let vehicleCode;
@@ -19,9 +16,7 @@ $(document).ready(function (){
             },
             success: function (data) {
                 console.log('Vehicles retrieved successfully:', data);
-                vehicleDb.length = 0; // Clear existing equipments
-                vehicleDb.push(...data); // Add fetched equipments
-                loadVehiclesTable();
+                loadVehiclesTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch vehicles:', status, error);
@@ -29,11 +24,11 @@ $(document).ready(function (){
         });
     }
 
-    function loadVehiclesTable() {
+    function loadVehiclesTable(vehicles) {
         $('#vehicle-table-tbody').empty();
-        console.log(vehicleDb);
+        console.log(vehicles);
 
-        vehicleDb.forEach((item) => {
+        vehicles.forEach((item) => {
             let record = `<tr>
                 <td class="vehicleCode_value">${item.vehicleCode}</td>
                 <td class="licensePlateNumber_value">${item.licensePlateNumber}</td>
@@ -149,19 +144,17 @@ $(document).ready(function (){
             },
             success: function (data) {
                 console.log('Staff retrieved successfully:', data);
-                staffDb.length = 0;
-                staffDb.push(...data);
-                loadStaffTable();
+                loadStaffTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch staff:', status, error);
             }
         });
     }
-    function loadStaffTable() {
+    function loadStaffTable(staff) {
         $('#staff-table-in-vehicle-table-tbody').empty();
-        console.log(staffDb);
-        staffDb.forEach((item) => {
+        console.log(staff);
+        staff.forEach((item) => {
             let vehicleIds = [];
             try {
                 if (Array.isArray(item.vehicles)) {

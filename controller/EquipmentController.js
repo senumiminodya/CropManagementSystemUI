@@ -1,7 +1,3 @@
-import {equipmentDb} from "../db/Db.js";
-import {staffDb} from "../db/Db.js";
-import {fieldDb} from "../db/Db.js";
-
 $(document).ready(function () {
     const baseURL = "http://localhost:5050/cropManagementSystem/api/v1/equipments";
     let equipmentId;
@@ -26,9 +22,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log('Equipments retrieved successfully:', data);
-                equipmentDb.length = 0; // Clear existing equipments
-                equipmentDb.push(...data); // Add fetched equipments
-                loadEquipmentTable();
+                loadEquipmentTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch equipments:', status, error);
@@ -36,11 +30,11 @@ $(document).ready(function () {
         });
     }
 
-    function loadEquipmentTable() {
+    function loadEquipmentTable(equipments) {
         $('#equipment-table-tbody').empty();
-        console.log(equipmentDb);
+        console.log(equipments);
 
-        equipmentDb.forEach((item) => {
+        equipments.forEach((item) => {
             let record = `<tr>
                 <td class="equipment_id_value">${item.equipmentId}</td>
                 <td class="equipment_name_value">${item.name}</td>
@@ -88,19 +82,17 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log('Fields retrieved successfully:', data);
-                fieldDb.length = 0;
-                fieldDb.push(...data);
-                loadFieldTable();
+                loadFieldTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch fields:', status, error);
             }
         });
     }
-    function loadFieldTable() {
+    function loadFieldTable(fields) {
         $('#field-table-in-equipment-table-tbody').empty();
-        console.log(fieldDb);
-        fieldDb.forEach((item) => {
+        console.log(fields);
+        fields.forEach((item) => {
             // Create a new record string
             let record = `<tr>
                 <td class="equipment_form_field_code_value">${item.fieldCode}</td>
@@ -123,19 +115,17 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log('Staff retrieved successfully:', data);
-                staffDb.length = 0;
-                staffDb.push(...data);
-                loadStaffTable();
+                loadStaffTable(data);
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch staff:', status, error);
             }
         });
     }
-    function loadStaffTable() {
+    function loadStaffTable(staff) {
         $('#staff-table-in-equipment-table-tbody').empty();
-        console.log(staffDb);
-        staffDb.forEach((item) => {
+        console.log(staff);
+        staff.forEach((item) => {
             // Create a new record string
             let record = `<tr>
                 <td class="equipment_form_staff_id_value">${item.id}</td>
