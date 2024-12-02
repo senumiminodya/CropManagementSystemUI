@@ -462,7 +462,7 @@
         </section>
         <section class="monitoring-log-management content-section" id="monitoring">
             <div class="container">
-                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Monitoring Log Management <button class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openLogModal()">See All Logs</button></h2>
+                <h2><img src="../../assets/icons8-leaf-48.png" style="width: 40px; height: 40px; margin-right: 10px">Monitoring Log Management <button id="see-all-logs-btn" class="btn btn-secondary see-all-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openLogModal()">See All Logs</button></h2>
                 <!-- Popup Modal -->
                 <div id="logModal" class="modal">
                     <div class="modal-content">
@@ -476,12 +476,12 @@
                                     <th>Log Date</th>
                                     <th>Observation</th>
                                     <th>Observed Image</th>
-                                    <th>Fields</th>
                                     <th>Crops</th>
+                                    <th>Fields</th>
                                     <th>Staff</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="logs-table-tbody">
                                 <!-- Populate log data dynamically here -->
                                 </tbody>
                             </table>
@@ -499,6 +499,7 @@
                         <input type="date" class="form-control" id="update-log-date" placeholder="Enter Log Date">
                         <label for="update-observation">Observation</label>
                         <input type="text" class="form-control" id="update-observation" placeholder="Enter Observation">
+                        <img id="update-observed-image-preview" src="" alt="Observed Image Preview"><br>
                         <label for="update-observed-image">Observed Image</label>
                         <input type="file" class="form-control" id="update-observed-image">
                         <label for="update-fields-log">Fields</label>
@@ -507,8 +508,9 @@
                         <input type="text" class="form-control" id="update-crops-log" placeholder="Enter the Crop Codes">
                         <label for="update-staff-log">Staff</label>
                         <input type="text" class="form-control" id="update-staff-log" placeholder="Enter the Staff Ids">
-                        <button class="btn btn-primary update-btn">Update</button>
-                        <button class="btn btn-danger delete-btn">Delete</button>
+                        <button id="log-update-btn" class="btn btn-primary update-btn">Update</button>
+                        <button id="log-delete-btn" class="btn btn-danger delete-btn">Delete</button>
+                        <button id="log-clear-btn" class="btn btn-secondary delete-btn">Clear</button>
                     </div>
                 </div>
 
@@ -523,7 +525,7 @@
                     <input type="file" class="form-control" id="observed-image">
                     <label for="fields-log">Field Codes</label>
                     <input type="text" class="form-control" id="fields-log" placeholder="Enter the Field Codes">
-                    <p>You can see all fields here: <button class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInLog()" >
+                    <p>You can see all fields here: <button id="see-all-fields-btn-in-log" class="btn btn-secondary see-all-fields-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openFieldsModalInLog()" >
                         See all fields here
                     </button><br></p>
                     <!-- Popup Modal -->
@@ -540,11 +542,9 @@
                                         <th>Field Location</th>
                                         <th>Extent Size</th>
                                         <th>Field Image1</th>
-                                        <th>Field Image2</th>
-                                        <th>Staff</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="field-table-in-logs-table-tbody">
                                     <!-- Populate field data dynamically here -->
                                     </tbody>
                                 </table>
@@ -553,7 +553,7 @@
                     </div>
                     <label for="crops-log">Crops</label>
                     <input type="text" class="form-control" id="crops-log" placeholder="Enter the Crop Codes">
-                    <p>You can see all crops here: <button class="btn btn-secondary see-all-crops-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openCropModalInLog()" >
+                    <p>You can see all crops here: <button id="see-all-crops-btn-in-log" class="btn btn-secondary see-all-crops-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openCropModalInLog()" >
                         See all crops here
                     </button><br></p>
                     <!-- Popup Modal -->
@@ -571,10 +571,9 @@
                                         <th>Crop Image</th>
                                         <th>Category</th>
                                         <th>Crop Season</th>
-                                        <th>Field Code</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="crop-table-tbody-in-log-form">
                                     <!-- Populate crop data dynamically here -->
                                     </tbody>
                                 </table>
@@ -583,7 +582,7 @@
                     </div>
                     <label for="staff-log">Staff</label>
                     <input type="text" class="form-control" id="staff-log" placeholder="Enter the Staff Ids">
-                    <p>You can see all staff here: <button class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInLog()">
+                    <p>You can see all staff here: <button id="see-all-staff-btn-in-log" class="btn btn-secondary see-all-staff-btn" style="padding-top: 3px; padding-left: 6px; padding-bottom: 3px; padding-right: 6px;" onclick="openStaffModalInLog()">
                         See all Staff here
                     </button><br></p>
                     <!-- Popup Modal -->
@@ -599,28 +598,19 @@
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Designation</th>
-                                        <th>Gender</th>
-                                        <th>Joined Date</th>
-                                        <th>DOB</th>
-                                        <th>Address Line1</th>
-                                        <th>Address Line2</th>
-                                        <th>Address Line3</th>
-                                        <th>Address Line4</th>
-                                        <th>Address Line5</th>
                                         <th>Contact No</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>Vehicles</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="staff-table-tbody-in-log-form">
                                     <!-- Populate staff data dynamically here -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary save-btn">Save</button>
+                    <button id="log-save-btn" class="btn btn-primary save-btn">Save</button>
                 </div>
             </div>
         </section>

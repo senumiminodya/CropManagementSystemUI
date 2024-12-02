@@ -170,6 +170,12 @@
     height: auto; /* Maintains aspect ratio */
     object-fit: cover;
 }
+#update-observed-image-preview {
+    width: 100%; /* Adjusts width dynamically */
+    max-width: 200px; /* Ensures it doesn't exceed 200px */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: cover;
+}
 .equipment-management h2 {
     display: flex;
     justify-content: space-between;
