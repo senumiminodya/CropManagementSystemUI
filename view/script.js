@@ -56,8 +56,12 @@ $('#signup-btn').on('click',()=>{
             data: JSON.stringify({ email, password, role }),
             success: function (response) {
                 // Store the token from the response
-                localStorage.setItem('token', response.token);
-                alert("Sign-up successful! You can login now!");
+                if (role=="OTHER"){
+                    alert("You can not sign up to this system.")
+                } else {
+                    localStorage.setItem('token', response.token);
+                    alert("Sign-up successful! You can login now!");
+                }
             },
             error: function () {
                 alert("Sign-up failed. Please try again.");
