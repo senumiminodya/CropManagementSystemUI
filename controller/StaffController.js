@@ -81,6 +81,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error("Failed to fetch staff data:", status, error);
+                alert("Failed to fetch staff data. Please try again.")
             }
         });
     });
@@ -118,6 +119,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error("Failed to update staff:", status, error);
+                alert("Failed to update staff. Please try again.")
             }
         });
     });
@@ -137,6 +139,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to delete staff:', status, error);
+                alert("Failed to delete staff. Please try again.")
             }
         });
     });
@@ -173,6 +176,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to save staff data:', status, error);
+                alert("Failed to save staff. Please try again.")
                 // Handle error, e.g., display an error message
             }
         });

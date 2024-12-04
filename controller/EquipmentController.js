@@ -69,6 +69,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error("Failed to fetch equipment data:", status, error);
+                alert("Failed to fetch equipment data");
             }
         });
     });
@@ -86,6 +87,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch fields:', status, error);
+                alert("Failed to fetch fields. Please try again");
             }
         });
     }
@@ -170,6 +172,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error('Failed to delete equipment:', status, error);
+                alert("Failed to delete equipment. Please try again");
             }
         });
     });
@@ -201,6 +204,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error("Failed to update equipment:", status, error);
+                alert("Failed to update equipment. Please try again.")
             }
         });
     });
@@ -230,6 +234,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error('Failed to save equipment data:', status, error);
+                alert("Failed to save equipment data. Please try again.")
                 // Handle error, e.g., display an error message
             }
         });

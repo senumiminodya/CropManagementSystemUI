@@ -156,6 +156,7 @@ $(document).ready(function (){
             },
             error: function(xhr, status, error) {
                 console.error("Failed to fetch field data:", status, error);
+                alert("Failed to fetch field data. Please try again.")
             }
         });
     });
@@ -180,6 +181,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to delete field:', status, error);
+                alert("Failed to delete field. Please try again.")
             }
         });
     });

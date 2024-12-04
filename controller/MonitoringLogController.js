@@ -200,6 +200,7 @@ $(document).ready(function (){
             },
             error: function(xhr, status, error) {
                 console.error("Failed to fetch log data:", status, error);
+                alert("Failed to fetch log data. Please try again.")
             }
         });
     })
@@ -290,6 +291,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to delete log:', status, error);
+                alert("Failed to delete log. Please try again.")
             }
         });
     })

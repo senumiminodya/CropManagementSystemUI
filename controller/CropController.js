@@ -25,7 +25,6 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch crops:', status, error);
-                alert('Error fetching crops. Please try again later.');
             }
         });
     }
@@ -86,6 +85,7 @@ $(document).ready(function (){
             },
             error: function(xhr, status, error) {
                 console.error("Failed to fetch crop data:", status, error);
+                alert('Fail to fetch crop data.')
             }
         });
     });
@@ -110,6 +110,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to delete crop:', status, error);
+                alert('Fail to delete the crop. Please try again');
             }
         });
     });
@@ -127,7 +128,6 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to fetch fields:', status, error);
-                alert('Error fetching fields. Please try again later.');
             }
         });
     }
@@ -186,6 +186,7 @@ $(document).ready(function (){
             },
             error: function(xhr, status, error) {
                 console.error("Failed to update crop:", status, error);
+                alert("Failed to update crop. Please try again")
             }
         });
     });
@@ -229,6 +230,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to save crop data:', status, error);
+                alert("Failed to save crop. Please try again")
                 // Handle error, e.g., display an error message
             }
         });

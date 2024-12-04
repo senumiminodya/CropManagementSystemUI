@@ -64,6 +64,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error("Failed to fetch vehicle data:", status, error);
+                alert("Failed to fetch vehicle data. Please try again.")
             }
         });
     });
@@ -96,6 +97,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error("Failed to update vehicle:", status, error);
+                alert("Failed to update vehicle. Please try again.")
             }
         });
     });
@@ -127,6 +129,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to delete vehicle:', status, error);
+                alert("Failed to delete vehicle. Please try again.")
             }
         });
     });
@@ -212,6 +215,7 @@ $(document).ready(function (){
             },
             error: function (xhr, status, error) {
                 console.error('Failed to save vehicle data:', status, error);
+                alert("Faied to save vehicle data. Please try again.")
                 // Handle error, e.g., display an error message
             }
         });
