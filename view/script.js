@@ -22,6 +22,8 @@ $('#signin-btn').on('click',(event)=>{
                 localStorage.setItem('email',email);
                 alert("Successfully signed in!!!");
                 console.log("Success");
+                $('#signin-email').val('');
+                $('#signin-password').val('');
                 $('#signin-section').css({display: 'none'});
                 $('#sidebar').css({display: 'block'});
                 $('#dropdownMenu').css({display: 'none'});
@@ -49,7 +51,40 @@ $('#signup-btn').on('click',()=>{
     const email = $('#signup-email').val();
     const password = $('#signup-password').val();
     const role = $('#signup-role').val();
-    $.ajax({
+    let isValid = true;
+
+    // Password Validation
+    const passwordHelp = $('#passwordHelp');
+    if ($.trim(password) === '') {
+        passwordHelp.text('Password is required');
+        isValid = false;
+        console.log("Password is required");
+    } else if (password.length < 6) {
+        passwordHelp.text('Password must be at least 6 characters');
+        isValid = false;
+        console.log("Password must be at least 6 characters");
+    } else {
+        passwordHelp.text('');
+        console.log("Password is valid");
+    }
+
+    // Email Validation
+    const emailHelp = $('#emailHelp');
+    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    if ($.trim(email) === '') {
+        emailHelp.text('Email address is required');
+        isValid = false;
+        console.log("Email address is required");
+    } else if (!emailPattern.test(email)) {
+        emailHelp.text('Invalid email address');
+        isValid = false;
+        console.log("Invalid email address");
+    } else {
+        emailHelp.text('');
+        console.log("Email is valid");
+    }
+    if(isValid) {
+        $.ajax({
             url: 'http://localhost:5050/cropManagementSystem/api/v1/auth/signup',
             type: 'POST',
             contentType: 'application/json',
@@ -61,13 +96,21 @@ $('#signup-btn').on('click',()=>{
                 } else {
                     localStorage.setItem('token', response.token);
                     alert("Sign-up successful! You can login now!");
+                    clearSignupFields();
                 }
             },
             error: function () {
                 alert("Sign-up failed. Please try again.");
             }
         });
+    } else {
+        alert("Enter correct data.")
+    }
 });
+function clearSignupFields() {
+    $('#signup-email').val('');
+    $('#signup-password').val('');
+}
 $('#logout-btn').on('click', ()=>{
     console.log("Logout btn clicked!")
     $('#sidebar').css({display: 'none'});
